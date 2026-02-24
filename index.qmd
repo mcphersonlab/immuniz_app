@@ -1,0 +1,1120 @@
+---
+title: "Pediatric Immunization Scheduler"
+subtitle: "AAP/ACIP Recommended Vaccine Schedule with Contraindication Checks"
+format:
+  html:
+    page-layout: full
+    css: styles.css
+---
+
+```{=html}
+<div id="app" class="container-fluid">
+
+  <!-- ── Patient Input Panel ─────────────────────────────────────── -->
+  <div class="row g-4 mb-4">
+    <div class="col-12">
+      <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+          <h5 class="mb-0">&#128100; Patient Information</h5>
+        </div>
+        <div class="card-body">
+          <div class="row g-3">
+
+            <div class="col-md-4">
+              <label for="dob" class="form-label fw-semibold">Date of Birth</label>
+              <input type="date" id="dob" class="form-control" />
+              <div class="form-text">Or enter age below instead</div>
+            </div>
+
+            <div class="col-md-2">
+              <label class="form-label fw-semibold">Age (if no DOB)</label>
+              <div class="input-group">
+                <input type="number" id="age-value" class="form-control" min="0" placeholder="e.g. 6" />
+                <select id="age-unit" class="form-select">
+                  <option value="days">days</option>
+                  <option value="weeks">weeks</option>
+                  <option value="months" selected>months</option>
+                  <option value="years">years</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="col-md-6 d-flex align-items-end">
+              <button id="calculate-btn" class="btn btn-primary me-2">
+                &#128269; Calculate Schedule
+              </button>
+              <button id="reset-btn" class="btn btn-outline-secondary">
+                &#x21BA; Reset
+              </button>
+            </div>
+
+          </div><!-- /row -->
+
+          <!-- Contraindications -->
+          <hr class="my-3" />
+          <h6 class="fw-semibold mb-3">&#9888;&#65039; Contraindication &amp; Precaution Screening</h6>
+          <div class="row g-2">
+
+            <div class="col-md-4 col-lg-3">
+              <div class="form-check">
+                <input class="form-check-input contra" type="checkbox" id="c-allergy-egg" value="allergy-egg" />
+                <label class="form-check-label" for="c-allergy-egg">Egg allergy (severe / anaphylaxis)</label>
+              </div>
+            </div>
+
+            <div class="col-md-4 col-lg-3">
+              <div class="form-check">
+                <input class="form-check-input contra" type="checkbox" id="c-allergy-gelatin" value="allergy-gelatin" />
+                <label class="form-check-label" for="c-allergy-gelatin">Gelatin allergy</label>
+              </div>
+            </div>
+
+            <div class="col-md-4 col-lg-3">
+              <div class="form-check">
+                <input class="form-check-input contra" type="checkbox" id="c-allergy-neomycin" value="allergy-neomycin" />
+                <label class="form-check-label" for="c-allergy-neomycin">Neomycin allergy</label>
+              </div>
+            </div>
+
+            <div class="col-md-4 col-lg-3">
+              <div class="form-check">
+                <input class="form-check-input contra" type="checkbox" id="c-allergy-yeast" value="allergy-yeast" />
+                <label class="form-check-label" for="c-allergy-yeast">Yeast (Saccharomyces) allergy</label>
+              </div>
+            </div>
+
+            <div class="col-md-4 col-lg-3">
+              <div class="form-check">
+                <input class="form-check-input contra" type="checkbox" id="c-immunocompromised" value="immunocompromised" />
+                <label class="form-check-label" for="c-immunocompromised">Immunocompromised (HIV, chemo, steroids ≥ 2 wks, etc.)</label>
+              </div>
+            </div>
+
+            <div class="col-md-4 col-lg-3">
+              <div class="form-check">
+                <input class="form-check-input contra" type="checkbox" id="c-pregnant" value="pregnant" />
+                <label class="form-check-label" for="c-pregnant">Pregnant</label>
+              </div>
+            </div>
+
+            <div class="col-md-4 col-lg-3">
+              <div class="form-check">
+                <input class="form-check-input contra" type="checkbox" id="c-encephalopathy" value="encephalopathy" />
+                <label class="form-check-label" for="c-encephalopathy">Encephalopathy within 7 days of prior DTaP dose</label>
+              </div>
+            </div>
+
+            <div class="col-md-4 col-lg-3">
+              <div class="form-check">
+                <input class="form-check-input contra" type="checkbox" id="c-intussusception" value="intussusception" />
+                <label class="form-check-label" for="c-intussusception">History of intussusception</label>
+              </div>
+            </div>
+
+            <div class="col-md-4 col-lg-3">
+              <div class="form-check">
+                <input class="form-check-input contra" type="checkbox" id="c-scid" value="scid" />
+                <label class="form-check-label" for="c-scid">SCID (Severe Combined Immunodeficiency)</label>
+              </div>
+            </div>
+
+            <div class="col-md-4 col-lg-3">
+              <div class="form-check">
+                <input class="form-check-input contra" type="checkbox" id="c-asthma" value="asthma" />
+                <label class="form-check-label" for="c-asthma">Asthma (age &lt; 5 or on systemic steroids)</label>
+              </div>
+            </div>
+
+            <div class="col-md-4 col-lg-3">
+              <div class="form-check">
+                <input class="form-check-input contra" type="checkbox" id="c-prev-reaction" value="prev-reaction" />
+                <label class="form-check-label" for="c-prev-reaction">Severe allergic reaction to prior dose of this vaccine</label>
+              </div>
+            </div>
+
+            <div class="col-md-4 col-lg-3">
+              <div class="form-check">
+                <input class="form-check-input contra" type="checkbox" id="c-hiv-low-cd4" value="hiv-low-cd4" />
+                <label class="form-check-label" for="c-hiv-low-cd4">HIV with severe immunosuppression (low CD4)</label>
+              </div>
+            </div>
+
+            <div class="col-md-4 col-lg-3">
+              <div class="form-check">
+                <input class="form-check-input contra" type="checkbox" id="c-complement-deficiency" value="complement-deficiency" />
+                <label class="form-check-label" for="c-complement-deficiency">Complement deficiency / eculizumab use</label>
+              </div>
+            </div>
+
+            <div class="col-md-4 col-lg-3">
+              <div class="form-check">
+                <input class="form-check-input contra" type="checkbox" id="c-asplenia" value="asplenia" />
+                <label class="form-check-label" for="c-asplenia">Asplenia / functional asplenia (e.g., sickle cell)</label>
+              </div>
+            </div>
+
+            <div class="col-md-4 col-lg-3">
+              <div class="form-check">
+                <input class="form-check-input contra" type="checkbox" id="c-latex" value="latex" />
+                <label class="form-check-label" for="c-latex">Latex allergy (for vials with latex stoppers)</label>
+              </div>
+            </div>
+
+          </div><!-- /row -->
+        </div><!-- /card-body -->
+      </div><!-- /card -->
+    </div>
+  </div><!-- /row -->
+
+  <!-- ── Results ─────────────────────────────────────────────────── -->
+  <div id="results" class="d-none">
+
+    <div class="row g-4 mb-4">
+      <div class="col-12">
+        <div id="age-banner" class="alert alert-info fw-semibold mb-0"></div>
+      </div>
+    </div>
+
+    <!-- Recommended Now -->
+    <div class="row g-4 mb-4">
+      <div class="col-12">
+        <div class="card shadow-sm border-success">
+          <div class="card-header bg-success text-white">
+            <h5 class="mb-0">&#10003; Vaccines Recommended Now</h5>
+          </div>
+          <div class="card-body p-0">
+            <div id="recommended-now" class="table-responsive">
+              <table class="table table-striped table-hover mb-0">
+                <thead class="table-light">
+                  <tr>
+                    <th>Vaccine</th>
+                    <th>Series / Dose</th>
+                    <th>Notes</th>
+                  </tr>
+                </thead>
+                <tbody id="recommended-now-body"></tbody>
+              </table>
+            </div>
+            <div id="no-recommended" class="p-3 text-muted d-none">No vaccines are due at this age.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Catch-up -->
+    <div class="row g-4 mb-4" id="catchup-section">
+      <div class="col-12">
+        <div class="card shadow-sm border-warning">
+          <div class="card-header bg-warning">
+            <h5 class="mb-0">&#9200; Catch-Up Vaccines</h5>
+          </div>
+          <div class="card-body p-0">
+            <div class="table-responsive">
+              <table class="table table-striped table-hover mb-0">
+                <thead class="table-light">
+                  <tr>
+                    <th>Vaccine</th>
+                    <th>Series / Dose</th>
+                    <th>Notes</th>
+                  </tr>
+                </thead>
+                <tbody id="catchup-body"></tbody>
+              </table>
+            </div>
+            <div id="no-catchup" class="p-3 text-muted d-none">No catch-up vaccines needed.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Contraindicated / Precaution -->
+    <div class="row g-4 mb-4" id="contra-section">
+      <div class="col-12">
+        <div class="card shadow-sm border-danger">
+          <div class="card-header bg-danger text-white">
+            <h5 class="mb-0">&#10005; Contraindicated / Precaution Vaccines</h5>
+          </div>
+          <div class="card-body p-0">
+            <div class="table-responsive">
+              <table class="table table-striped table-hover mb-0">
+                <thead class="table-light">
+                  <tr>
+                    <th>Vaccine</th>
+                    <th>Type</th>
+                    <th>Reason</th>
+                  </tr>
+                </thead>
+                <tbody id="contra-body"></tbody>
+              </table>
+            </div>
+            <div id="no-contra" class="p-3 text-muted d-none">No contraindications identified based on selected criteria.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Risk-based -->
+    <div class="row g-4 mb-4" id="risk-section">
+      <div class="col-12">
+        <div class="card shadow-sm border-info">
+          <div class="card-header bg-info text-white">
+            <h5 class="mb-0">&#9432; Risk-Based / Shared Clinical Decision Vaccines</h5>
+          </div>
+          <div class="card-body p-0">
+            <div class="table-responsive">
+              <table class="table table-striped table-hover mb-0">
+                <thead class="table-light">
+                  <tr>
+                    <th>Vaccine</th>
+                    <th>Indication</th>
+                    <th>Notes</th>
+                  </tr>
+                </thead>
+                <tbody id="risk-body"></tbody>
+              </table>
+            </div>
+            <div id="no-risk" class="p-3 text-muted d-none">No additional risk-based vaccines apply.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Disclaimer -->
+    <div class="row">
+      <div class="col-12">
+        <div class="alert alert-secondary small">
+          <strong>&#9888; Disclaimer:</strong> This tool is intended as a clinical decision-support aid based on the
+          <a href="https://www.cdc.gov/vaccines/schedules/hcp/imz/child-adolescent.html" target="_blank">ACIP/AAP recommended immunization schedule</a>.
+          It does not replace clinical judgment or real-time CDC/AAP guidelines. Always verify doses already given,
+          check current VIS sheets, and consult the most recent ACIP recommendations before administering vaccines.
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /#results -->
+
+</div><!-- /#app -->
+
+<script>
+// ══════════════════════════════════════════════════════════════════
+//  AAP / ACIP Pediatric Immunization Scheduler
+//  Data current as of the 2024-25 ACIP recommended schedule.
+// ══════════════════════════════════════════════════════════════════
+
+// ── Helpers ───────────────────────────────────────────────────────
+/** Convert any age to days for easy comparison */
+function toDays(value, unit) {
+  switch (unit) {
+    case 'days':   return value;
+    case 'weeks':  return value * 7;
+    case 'months': return value * 30.4375;
+    case 'years':  return value * 365.25;
+    default:       return value;
+  }
+}
+
+function ageLabel(days) {
+  if (days < 7)   return `${Math.round(days)} day${days !== 1 ? 's' : ''}`;
+  if (days < 61)  return `${Math.round(days / 7)} week${Math.round(days / 7) !== 1 ? 's' : ''}`;
+  if (days < 730) return `${Math.round(days / 30.4375)} month${Math.round(days / 30.4375) !== 1 ? 's' : ''}`;
+  return `${(days / 365.25).toFixed(1)} years`;
+}
+
+// ── Vaccine Schedule Data ─────────────────────────────────────────
+/*
+  Each entry: { vaccine, abbr, series, minAgeDays, maxAgeDays,
+                catchupMinDays, catchupMaxDays, notes,
+                contraindications: [...keys], precautions: [...keys],
+                liveVaccine: bool, riskBased: bool, riskIndication }
+*/
+const SCHEDULE = [
+  // HepB
+  {
+    vaccine: "Hepatitis B",
+    abbr: "HepB",
+    series: "Dose 1",
+    minAgeDays: 0,
+    maxAgeDays: toDays(7, 'days'),
+    catchupMinDays: 0,
+    catchupMaxDays: toDays(18, 'years'),
+    notes: "Administer within 24 h of birth; HepBsAg-positive mother → add HBIG within 12 h.",
+    contraindications: ['allergy-yeast', 'prev-reaction'],
+    precautions: [],
+    liveVaccine: false,
+    riskBased: false
+  },
+  {
+    vaccine: "Hepatitis B",
+    abbr: "HepB",
+    series: "Dose 2",
+    minAgeDays: toDays(1, 'months'),
+    maxAgeDays: toDays(2, 'months'),
+    catchupMinDays: toDays(1, 'months'),
+    catchupMaxDays: toDays(18, 'years'),
+    notes: "At least 4 weeks after dose 1.",
+    contraindications: ['allergy-yeast', 'prev-reaction'],
+    precautions: [],
+    liveVaccine: false,
+    riskBased: false
+  },
+  {
+    vaccine: "Hepatitis B",
+    abbr: "HepB",
+    series: "Dose 3",
+    minAgeDays: toDays(6, 'months'),
+    maxAgeDays: toDays(18, 'months'),
+    catchupMinDays: toDays(6, 'months'),
+    catchupMaxDays: toDays(18, 'years'),
+    notes: "At least 16 weeks after dose 1 and at least 8 weeks after dose 2; no earlier than 6 months.",
+    contraindications: ['allergy-yeast', 'prev-reaction'],
+    precautions: [],
+    liveVaccine: false,
+    riskBased: false
+  },
+
+  // RV
+  {
+    vaccine: "Rotavirus",
+    abbr: "RV",
+    series: "Dose 1",
+    minAgeDays: toDays(6, 'weeks'),
+    maxAgeDays: toDays(2, 'months'),
+    catchupMinDays: toDays(6, 'weeks'),
+    catchupMaxDays: toDays(8, 'months'),
+    notes: "RV1 (Rotarix): 2-dose series; RV5 (RotaTeq): 3-dose series. Do NOT start after 15 weeks 0 days.",
+    contraindications: ['scid', 'intussusception', 'prev-reaction'],
+    precautions: ['immunocompromised'],
+    liveVaccine: true,
+    riskBased: false
+  },
+  {
+    vaccine: "Rotavirus",
+    abbr: "RV",
+    series: "Dose 2",
+    minAgeDays: toDays(4, 'months'),
+    maxAgeDays: toDays(4, 'months'),
+    catchupMinDays: toDays(4, 'months'),
+    catchupMaxDays: toDays(8, 'months'),
+    notes: "Minimum interval 4 weeks from dose 1. Series must be completed by 8 months 0 days.",
+    contraindications: ['scid', 'intussusception', 'prev-reaction'],
+    precautions: ['immunocompromised'],
+    liveVaccine: true,
+    riskBased: false
+  },
+  {
+    vaccine: "Rotavirus (RV5 only)",
+    abbr: "RV5",
+    series: "Dose 3",
+    minAgeDays: toDays(6, 'months'),
+    maxAgeDays: toDays(6, 'months'),
+    catchupMinDays: toDays(6, 'months'),
+    catchupMaxDays: toDays(8, 'months'),
+    notes: "RV5 (RotaTeq) 3-dose series only. Series must be completed by 8 months 0 days.",
+    contraindications: ['scid', 'intussusception', 'prev-reaction'],
+    precautions: ['immunocompromised'],
+    liveVaccine: true,
+    riskBased: false
+  },
+
+  // DTaP
+  {
+    vaccine: "Diphtheria, Tetanus & acellular Pertussis",
+    abbr: "DTaP",
+    series: "Dose 1",
+    minAgeDays: toDays(2, 'months'),
+    maxAgeDays: toDays(2, 'months'),
+    catchupMinDays: toDays(6, 'weeks'),
+    catchupMaxDays: toDays(6, 'years'),
+    notes: "Use Tdap for persons ≥ 7 years.",
+    contraindications: ['prev-reaction', 'encephalopathy'],
+    precautions: [],
+    liveVaccine: false,
+    riskBased: false
+  },
+  {
+    vaccine: "Diphtheria, Tetanus & acellular Pertussis",
+    abbr: "DTaP",
+    series: "Dose 2",
+    minAgeDays: toDays(4, 'months'),
+    maxAgeDays: toDays(4, 'months'),
+    catchupMinDays: toDays(4, 'months'),
+    catchupMaxDays: toDays(6, 'years'),
+    notes: "Minimum interval 4 weeks from dose 1.",
+    contraindications: ['prev-reaction', 'encephalopathy'],
+    precautions: [],
+    liveVaccine: false,
+    riskBased: false
+  },
+  {
+    vaccine: "Diphtheria, Tetanus & acellular Pertussis",
+    abbr: "DTaP",
+    series: "Dose 3",
+    minAgeDays: toDays(6, 'months'),
+    maxAgeDays: toDays(6, 'months'),
+    catchupMinDays: toDays(6, 'months'),
+    catchupMaxDays: toDays(6, 'years'),
+    notes: "Minimum interval 4 weeks from dose 2.",
+    contraindications: ['prev-reaction', 'encephalopathy'],
+    precautions: [],
+    liveVaccine: false,
+    riskBased: false
+  },
+  {
+    vaccine: "Diphtheria, Tetanus & acellular Pertussis",
+    abbr: "DTaP",
+    series: "Dose 4 (booster)",
+    minAgeDays: toDays(15, 'months'),
+    maxAgeDays: toDays(18, 'months'),
+    catchupMinDays: toDays(12, 'months'),
+    catchupMaxDays: toDays(6, 'years'),
+    notes: "Minimum 6 months after dose 3.",
+    contraindications: ['prev-reaction', 'encephalopathy'],
+    precautions: [],
+    liveVaccine: false,
+    riskBased: false
+  },
+  {
+    vaccine: "Diphtheria, Tetanus & acellular Pertussis",
+    abbr: "DTaP",
+    series: "Dose 5 (pre-school)",
+    minAgeDays: toDays(4, 'years'),
+    maxAgeDays: toDays(6, 'years'),
+    catchupMinDays: toDays(4, 'years'),
+    catchupMaxDays: toDays(6, 'years'),
+    notes: "Not needed if dose 4 was given at ≥ 4 years.",
+    contraindications: ['prev-reaction', 'encephalopathy'],
+    precautions: [],
+    liveVaccine: false,
+    riskBased: false
+  },
+
+  // Tdap
+  {
+    vaccine: "Tetanus, Diphtheria & acellular Pertussis",
+    abbr: "Tdap",
+    series: "Booster",
+    minAgeDays: toDays(11, 'years'),
+    maxAgeDays: toDays(12, 'years'),
+    catchupMinDays: toDays(7, 'years'),
+    catchupMaxDays: toDays(18, 'years'),
+    notes: "Single booster dose; can be given regardless of interval since last Td-containing vaccine.",
+    contraindications: ['prev-reaction', 'encephalopathy'],
+    precautions: [],
+    liveVaccine: false,
+    riskBased: false
+  },
+
+  // Hib
+  {
+    vaccine: "Haemophilus influenzae type b",
+    abbr: "Hib",
+    series: "Dose 1",
+    minAgeDays: toDays(2, 'months'),
+    maxAgeDays: toDays(2, 'months'),
+    catchupMinDays: toDays(6, 'weeks'),
+    catchupMaxDays: toDays(5, 'years'),
+    notes: "PRP-T (ActHIB, Pentacel, Hiberix) or PRP-OMP (PedvaxHIB); schedule differs by product.",
+    contraindications: ['prev-reaction'],
+    precautions: [],
+    liveVaccine: false,
+    riskBased: false
+  },
+  {
+    vaccine: "Haemophilus influenzae type b",
+    abbr: "Hib",
+    series: "Dose 2",
+    minAgeDays: toDays(4, 'months'),
+    maxAgeDays: toDays(4, 'months'),
+    catchupMinDays: toDays(4, 'months'),
+    catchupMaxDays: toDays(5, 'years'),
+    notes: "Not needed for PRP-OMP (PedvaxHIB) at 4 months in a 2-dose primary series.",
+    contraindications: ['prev-reaction'],
+    precautions: [],
+    liveVaccine: false,
+    riskBased: false
+  },
+  {
+    vaccine: "Haemophilus influenzae type b",
+    abbr: "Hib",
+    series: "Dose 3",
+    minAgeDays: toDays(6, 'months'),
+    maxAgeDays: toDays(6, 'months'),
+    catchupMinDays: toDays(6, 'months'),
+    catchupMaxDays: toDays(5, 'years'),
+    notes: "Not needed with PRP-OMP primary series.",
+    contraindications: ['prev-reaction'],
+    precautions: [],
+    liveVaccine: false,
+    riskBased: false
+  },
+  {
+    vaccine: "Haemophilus influenzae type b",
+    abbr: "Hib",
+    series: "Dose 4 (booster)",
+    minAgeDays: toDays(12, 'months'),
+    maxAgeDays: toDays(15, 'months'),
+    catchupMinDays: toDays(12, 'months'),
+    catchupMaxDays: toDays(5, 'years'),
+    notes: "Hiberix preferred for booster dose in children 12 months–4 years.",
+    contraindications: ['prev-reaction'],
+    precautions: [],
+    liveVaccine: false,
+    riskBased: false
+  },
+
+  // PCV
+  {
+    vaccine: "Pneumococcal Conjugate",
+    abbr: "PCV15/PCV20",
+    series: "Dose 1",
+    minAgeDays: toDays(2, 'months'),
+    maxAgeDays: toDays(2, 'months'),
+    catchupMinDays: toDays(6, 'weeks'),
+    catchupMaxDays: toDays(5, 'years'),
+    notes: "PCV15 or PCV20; if PCV20 used, PPSV23 is NOT needed in healthy children.",
+    contraindications: ['prev-reaction'],
+    precautions: [],
+    liveVaccine: false,
+    riskBased: false
+  },
+  {
+    vaccine: "Pneumococcal Conjugate",
+    abbr: "PCV15/PCV20",
+    series: "Dose 2",
+    minAgeDays: toDays(4, 'months'),
+    maxAgeDays: toDays(4, 'months'),
+    catchupMinDays: toDays(4, 'months'),
+    catchupMaxDays: toDays(5, 'years'),
+    notes: "Minimum interval 8 weeks from dose 1.",
+    contraindications: ['prev-reaction'],
+    precautions: [],
+    liveVaccine: false,
+    riskBased: false
+  },
+  {
+    vaccine: "Pneumococcal Conjugate",
+    abbr: "PCV15/PCV20",
+    series: "Dose 3",
+    minAgeDays: toDays(6, 'months'),
+    maxAgeDays: toDays(6, 'months'),
+    catchupMinDays: toDays(6, 'months'),
+    catchupMaxDays: toDays(5, 'years'),
+    notes: "Minimum interval 8 weeks from dose 2.",
+    contraindications: ['prev-reaction'],
+    precautions: [],
+    liveVaccine: false,
+    riskBased: false
+  },
+  {
+    vaccine: "Pneumococcal Conjugate",
+    abbr: "PCV15/PCV20",
+    series: "Dose 4 (booster)",
+    minAgeDays: toDays(12, 'months'),
+    maxAgeDays: toDays(15, 'months'),
+    catchupMinDays: toDays(12, 'months'),
+    catchupMaxDays: toDays(5, 'years'),
+    notes: "Minimum 8 weeks after dose 3; minimum age 12 months.",
+    contraindications: ['prev-reaction'],
+    precautions: [],
+    liveVaccine: false,
+    riskBased: false
+  },
+
+  // IPV
+  {
+    vaccine: "Inactivated Poliovirus",
+    abbr: "IPV",
+    series: "Dose 1",
+    minAgeDays: toDays(2, 'months'),
+    maxAgeDays: toDays(2, 'months'),
+    catchupMinDays: toDays(6, 'weeks'),
+    catchupMaxDays: toDays(18, 'years'),
+    notes: "Minimum age 6 weeks.",
+    contraindications: ['prev-reaction', 'allergy-neomycin', 'allergy-streptomycin', 'allergy-polymyxin-b'],
+    precautions: [],
+    liveVaccine: false,
+    riskBased: false
+  },
+  {
+    vaccine: "Inactivated Poliovirus",
+    abbr: "IPV",
+    series: "Dose 2",
+    minAgeDays: toDays(4, 'months'),
+    maxAgeDays: toDays(4, 'months'),
+    catchupMinDays: toDays(4, 'months'),
+    catchupMaxDays: toDays(18, 'years'),
+    notes: "Minimum interval 4 weeks from dose 1.",
+    contraindications: ['prev-reaction', 'allergy-neomycin'],
+    precautions: [],
+    liveVaccine: false,
+    riskBased: false
+  },
+  {
+    vaccine: "Inactivated Poliovirus",
+    abbr: "IPV",
+    series: "Dose 3",
+    minAgeDays: toDays(6, 'months'),
+    maxAgeDays: toDays(18, 'months'),
+    catchupMinDays: toDays(6, 'months'),
+    catchupMaxDays: toDays(18, 'years'),
+    notes: "Minimum interval 4 weeks from dose 2 if series started at < 1 year.",
+    contraindications: ['prev-reaction', 'allergy-neomycin'],
+    precautions: [],
+    liveVaccine: false,
+    riskBased: false
+  },
+  {
+    vaccine: "Inactivated Poliovirus",
+    abbr: "IPV",
+    series: "Dose 4 (final)",
+    minAgeDays: toDays(4, 'years'),
+    maxAgeDays: toDays(6, 'years'),
+    catchupMinDays: toDays(4, 'years'),
+    catchupMaxDays: toDays(18, 'years'),
+    notes: "At least 6 months after dose 3. Not needed if dose 3 given at ≥ 4 years.",
+    contraindications: ['prev-reaction', 'allergy-neomycin'],
+    precautions: [],
+    liveVaccine: false,
+    riskBased: false
+  },
+
+  // Influenza (IIV/ccIIV)
+  {
+    vaccine: "Influenza (Inactivated)",
+    abbr: "IIV4",
+    series: "Annual",
+    minAgeDays: toDays(6, 'months'),
+    maxAgeDays: toDays(18, 'years'),
+    catchupMinDays: toDays(6, 'months'),
+    catchupMaxDays: toDays(18, 'years'),
+    notes: "Two doses (4 weeks apart) in first season if < 9 years and not previously vaccinated. Severe egg allergy: use ccIIV4 or RIV4.",
+    contraindications: ['prev-reaction'],
+    precautions: ['allergy-egg'],
+    liveVaccine: false,
+    riskBased: false
+  },
+  {
+    vaccine: "Influenza (Live Attenuated)",
+    abbr: "LAIV4",
+    series: "Annual (alternative ≥ 2 yrs)",
+    minAgeDays: toDays(2, 'years'),
+    maxAgeDays: toDays(18, 'years'),
+    catchupMinDays: toDays(2, 'years'),
+    catchupMaxDays: toDays(18, 'years'),
+    notes: "Preferred alternative in healthy non-pregnant children/adolescents ≥ 2 years. NOT for asthmatic or immunocompromised patients.",
+    contraindications: ['immunocompromised', 'hiv-low-cd4', 'asthma', 'pregnant', 'prev-reaction', 'allergy-egg'],
+    precautions: [],
+    liveVaccine: true,
+    riskBased: false
+  },
+
+  // MMR
+  {
+    vaccine: "Measles, Mumps & Rubella",
+    abbr: "MMR",
+    series: "Dose 1",
+    minAgeDays: toDays(12, 'months'),
+    maxAgeDays: toDays(15, 'months'),
+    catchupMinDays: toDays(12, 'months'),
+    catchupMaxDays: toDays(18, 'years'),
+    notes: "Do not give before 12 months (antibody interference). Two-dose series minimum interval 4 weeks.",
+    contraindications: ['immunocompromised', 'hiv-low-cd4', 'pregnant', 'allergy-neomycin', 'allergy-gelatin', 'prev-reaction'],
+    precautions: [],
+    liveVaccine: true,
+    riskBased: false
+  },
+  {
+    vaccine: "Measles, Mumps & Rubella",
+    abbr: "MMR",
+    series: "Dose 2",
+    minAgeDays: toDays(4, 'years'),
+    maxAgeDays: toDays(6, 'years'),
+    catchupMinDays: toDays(4, 'years'),
+    catchupMaxDays: toDays(18, 'years'),
+    notes: "Minimum interval 4 weeks after dose 1.",
+    contraindications: ['immunocompromised', 'hiv-low-cd4', 'pregnant', 'allergy-neomycin', 'allergy-gelatin', 'prev-reaction'],
+    precautions: [],
+    liveVaccine: true,
+    riskBased: false
+  },
+
+  // Varicella
+  {
+    vaccine: "Varicella",
+    abbr: "VAR",
+    series: "Dose 1",
+    minAgeDays: toDays(12, 'months'),
+    maxAgeDays: toDays(15, 'months'),
+    catchupMinDays: toDays(12, 'months'),
+    catchupMaxDays: toDays(18, 'years'),
+    notes: "Contains gelatin and neomycin. Immunocompromised patients may receive VAR only with specialist guidance.",
+    contraindications: ['immunocompromised', 'hiv-low-cd4', 'pregnant', 'allergy-neomycin', 'allergy-gelatin', 'prev-reaction'],
+    precautions: [],
+    liveVaccine: true,
+    riskBased: false
+  },
+  {
+    vaccine: "Varicella",
+    abbr: "VAR",
+    series: "Dose 2",
+    minAgeDays: toDays(4, 'years'),
+    maxAgeDays: toDays(6, 'years'),
+    catchupMinDays: toDays(4, 'years'),
+    catchupMaxDays: toDays(18, 'years'),
+    notes: "Minimum interval 3 months after dose 1.",
+    contraindications: ['immunocompromised', 'hiv-low-cd4', 'pregnant', 'allergy-neomycin', 'allergy-gelatin', 'prev-reaction'],
+    precautions: [],
+    liveVaccine: true,
+    riskBased: false
+  },
+
+  // HepA
+  {
+    vaccine: "Hepatitis A",
+    abbr: "HepA",
+    series: "Dose 1",
+    minAgeDays: toDays(12, 'months'),
+    maxAgeDays: toDays(23, 'months'),
+    catchupMinDays: toDays(12, 'months'),
+    catchupMaxDays: toDays(18, 'years'),
+    notes: "Minimum age 12 months. Two-dose series; second dose 6–18 months later.",
+    contraindications: ['prev-reaction'],
+    precautions: [],
+    liveVaccine: false,
+    riskBased: false
+  },
+  {
+    vaccine: "Hepatitis A",
+    abbr: "HepA",
+    series: "Dose 2",
+    minAgeDays: toDays(18, 'months'),
+    maxAgeDays: toDays(29, 'months'),
+    catchupMinDays: toDays(18, 'months'),
+    catchupMaxDays: toDays(18, 'years'),
+    notes: "At least 6 months after dose 1.",
+    contraindications: ['prev-reaction'],
+    precautions: [],
+    liveVaccine: false,
+    riskBased: false
+  },
+
+  // MenACWY
+  {
+    vaccine: "Meningococcal ACWY",
+    abbr: "MenACWY",
+    series: "Dose 1",
+    minAgeDays: toDays(11, 'years'),
+    maxAgeDays: toDays(12, 'years'),
+    catchupMinDays: toDays(11, 'years'),
+    catchupMaxDays: toDays(18, 'years'),
+    notes: "Preferred age 11–12 years. Catch-up through 18 years if unvaccinated.",
+    contraindications: ['prev-reaction'],
+    precautions: [],
+    liveVaccine: false,
+    riskBased: false
+  },
+  {
+    vaccine: "Meningococcal ACWY",
+    abbr: "MenACWY",
+    series: "Booster",
+    minAgeDays: toDays(16, 'years'),
+    maxAgeDays: toDays(18, 'years'),
+    catchupMinDays: toDays(16, 'years'),
+    catchupMaxDays: toDays(18, 'years'),
+    notes: "Booster at 16 years; if first dose given ≥ 16 years, no booster needed.",
+    contraindications: ['prev-reaction'],
+    precautions: [],
+    liveVaccine: false,
+    riskBased: false
+  },
+
+  // HPV
+  {
+    vaccine: "Human Papillomavirus",
+    abbr: "HPV",
+    series: "2-dose series (age 9–14)",
+    minAgeDays: toDays(11, 'years'),
+    maxAgeDays: toDays(12, 'years'),
+    catchupMinDays: toDays(9, 'years'),
+    catchupMaxDays: toDays(18, 'years'),
+    notes: "2-dose series if started before 15th birthday (doses 0 and 6–12 months). 3-dose series if started at ≥ 15 years or immunocompromised.",
+    contraindications: ['prev-reaction', 'allergy-yeast'],
+    precautions: ['pregnant'],
+    liveVaccine: false,
+    riskBased: false
+  },
+
+  // COVID-19
+  {
+    vaccine: "COVID-19",
+    abbr: "COVID-19",
+    series: "Annual updated vaccine",
+    minAgeDays: toDays(6, 'months'),
+    maxAgeDays: toDays(18, 'years'),
+    catchupMinDays: toDays(6, 'months'),
+    catchupMaxDays: toDays(18, 'years'),
+    notes: "Current season's updated COVID-19 vaccine recommended annually. Follow most current ACIP guidance for product, dose count, and intervals.",
+    contraindications: ['prev-reaction'],
+    precautions: [],
+    liveVaccine: false,
+    riskBased: false
+  },
+
+  // RSV (nirsevimab / maternal RSVpreF) — monoclonal / immunization
+  {
+    vaccine: "RSV Prevention (Nirsevimab)",
+    abbr: "RSV/Nirsevimab",
+    series: "Single dose",
+    minAgeDays: 0,
+    maxAgeDays: toDays(8, 'months'),
+    catchupMinDays: 0,
+    catchupMaxDays: toDays(20, 'months'),
+    notes: "Monoclonal antibody (not a traditional vaccine). All infants < 8 months born during or entering first RSV season. High-risk children 8–19 months also eligible.",
+    contraindications: ['prev-reaction'],
+    precautions: [],
+    liveVaccine: false,
+    riskBased: false
+  },
+
+  // MenB — risk-based / shared decision
+  {
+    vaccine: "Meningococcal B",
+    abbr: "MenB",
+    series: "2- or 3-dose series",
+    minAgeDays: toDays(16, 'years'),
+    maxAgeDays: toDays(23, 'years'),
+    catchupMinDays: toDays(10, 'years'),
+    catchupMaxDays: toDays(23, 'years'),
+    notes: "Shared clinical decision-making for healthy adolescents 16–23 years (preferred 16–18 years). Required for asplenia, complement deficiency, eculizumab, or outbreak setting.",
+    contraindications: ['prev-reaction'],
+    precautions: [],
+    liveVaccine: false,
+    riskBased: true,
+    riskIndication: "Shared clinical decision 16–23 yrs; required for asplenia / complement deficiency / eculizumab / outbreak."
+  },
+
+  // PPSV23 — risk-based
+  {
+    vaccine: "Pneumococcal Polysaccharide",
+    abbr: "PPSV23",
+    series: "Risk-based",
+    minAgeDays: toDays(2, 'years'),
+    maxAgeDays: toDays(18, 'years'),
+    catchupMinDays: toDays(2, 'years'),
+    catchupMaxDays: toDays(18, 'years'),
+    notes: "For children 2–18 years with high-risk conditions (asplenia, sickle cell, immunocompromising conditions, cochlear implant, CSF leak). ≥ 8 weeks after last PCV dose.",
+    contraindications: ['prev-reaction'],
+    precautions: [],
+    liveVaccine: false,
+    riskBased: true,
+    riskIndication: "High-risk: asplenia, sickle cell, immunocompromising condition, cochlear implant, CSF leak."
+  }
+];
+
+// ── Contraindication Labels ────────────────────────────────────────
+const CONTRA_LABELS = {
+  'allergy-egg':       'Severe egg allergy',
+  'allergy-gelatin':   'Gelatin allergy',
+  'allergy-neomycin':  'Neomycin allergy',
+  'allergy-yeast':     'Yeast allergy',
+  'immunocompromised': 'Immunocompromised state',
+  'pregnant':          'Pregnancy',
+  'encephalopathy':    'Post-DTaP encephalopathy',
+  'intussusception':   'History of intussusception',
+  'scid':              'SCID',
+  'asthma':            'Asthma / reactive airway disease',
+  'prev-reaction':     'Severe reaction to prior dose',
+  'hiv-low-cd4':       'HIV with severe immunosuppression',
+  'complement-deficiency': 'Complement deficiency / eculizumab',
+  'asplenia':          'Asplenia / functional asplenia',
+  'latex':             'Latex allergy'
+};
+
+// ── Core Logic ────────────────────────────────────────────────────
+function getSelectedContra() {
+  return Array.from(document.querySelectorAll('.contra:checked')).map(cb => cb.value);
+}
+
+function ageWindowLabel(minDays, maxDays) {
+  return `${ageLabel(minDays)} – ${ageLabel(maxDays)}`;
+}
+
+function computeSchedule(ageDays) {
+  const selectedContra = getSelectedContra();
+  const contraSet = new Set(selectedContra);
+
+  const recommended = [];
+  const catchup     = [];
+  const contraItems = [];
+  const riskBased   = [];
+
+  for (const vax of SCHEDULE) {
+    if (vax.riskBased) {
+      if (ageDays >= vax.minAgeDays && ageDays <= vax.maxAgeDays) {
+        // Check for contraindications even for risk-based
+        const contraHits = vax.contraindications.filter(c => contraSet.has(c));
+        if (contraHits.length > 0) {
+          contraItems.push({
+            vaccine: vax.vaccine,
+            abbr: vax.abbr,
+            series: vax.series,
+            type: 'Contraindication',
+            reason: contraHits.map(c => CONTRA_LABELS[c] || c).join('; ')
+          });
+        } else {
+          riskBased.push({
+            vaccine: vax.vaccine,
+            abbr: vax.abbr,
+            series: vax.series,
+            indication: vax.riskIndication,
+            notes: vax.notes
+          });
+        }
+      }
+      continue;
+    }
+
+    // Check if in recommended window
+    const inWindow  = ageDays >= vax.minAgeDays && ageDays <= vax.maxAgeDays;
+    // Check if in catch-up window (but past recommended)
+    const inCatchup = !inWindow && ageDays > vax.maxAgeDays &&
+                      ageDays >= vax.catchupMinDays && ageDays <= vax.catchupMaxDays;
+
+    if (!inWindow && !inCatchup) continue;
+
+    // Evaluate contraindications
+    const absoluteContra = vax.contraindications.filter(c => contraSet.has(c));
+    const precautionHits = vax.precautions.filter(c => contraSet.has(c));
+
+    if (absoluteContra.length > 0) {
+      contraItems.push({
+        vaccine: vax.vaccine,
+        abbr: vax.abbr,
+        series: vax.series,
+        type: 'Contraindication',
+        reason: absoluteContra.map(c => CONTRA_LABELS[c] || c).join('; ')
+      });
+    } else if (precautionHits.length > 0) {
+      contraItems.push({
+        vaccine: vax.vaccine,
+        abbr: vax.abbr,
+        series: vax.series,
+        type: 'Precaution',
+        reason: precautionHits.map(c => CONTRA_LABELS[c] || c).join('; ')
+      });
+    } else {
+      const row = {
+        vaccine: vax.vaccine,
+        abbr: vax.abbr,
+        series: vax.series,
+        notes: vax.notes,
+        window: ageWindowLabel(vax.minAgeDays, vax.maxAgeDays)
+      };
+      if (inWindow) {
+        recommended.push(row);
+      } else {
+        catchup.push(row);
+      }
+    }
+  }
+
+  return { recommended, catchup, contraItems, riskBased };
+}
+
+// ── Render ─────────────────────────────────────────────────────────
+function renderTable(tbodyId, rows, columns, emptyId) {
+  const tbody = document.getElementById(tbodyId);
+  const emptyDiv = document.getElementById(emptyId);
+  tbody.innerHTML = '';
+  if (rows.length === 0) {
+    emptyDiv.classList.remove('d-none');
+    tbody.closest('div').classList.add('d-none');
+    return;
+  }
+  emptyDiv.classList.add('d-none');
+  tbody.closest('div').classList.remove('d-none');
+  rows.forEach(row => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = columns.map(col => `<td>${row[col] ?? ''}</td>`).join('');
+    tbody.appendChild(tr);
+  });
+}
+
+function renderResults(ageDays) {
+  const { recommended, catchup, contraItems, riskBased } = computeSchedule(ageDays);
+
+  document.getElementById('age-banner').textContent =
+    `Patient age: ${ageLabel(ageDays)}`;
+
+  renderTable('recommended-now-body', recommended,
+    ['vaccine', 'series', 'notes'], 'no-recommended');
+
+  renderTable('catchup-body', catchup,
+    ['vaccine', 'series', 'notes'], 'no-catchup');
+
+  // Contra table has different columns
+  const contraBody = document.getElementById('contra-body');
+  const noContra   = document.getElementById('no-contra');
+  contraBody.innerHTML = '';
+  if (contraItems.length === 0) {
+    noContra.classList.remove('d-none');
+    contraBody.closest('div').classList.add('d-none');
+  } else {
+    noContra.classList.add('d-none');
+    contraBody.closest('div').classList.remove('d-none');
+    contraItems.forEach(item => {
+      const tr = document.createElement('tr');
+      const badgeClass = item.type === 'Contraindication' ? 'bg-danger' : 'bg-warning text-dark';
+      tr.innerHTML = `<td>${item.vaccine} (${item.abbr})</td>
+        <td><span class="badge ${badgeClass}">${item.type}</span></td>
+        <td>${item.reason}</td>`;
+      contraBody.appendChild(tr);
+    });
+  }
+
+  renderTable('risk-body', riskBased,
+    ['vaccine', 'series', 'indication'], 'no-risk');
+
+  document.getElementById('results').classList.remove('d-none');
+}
+
+// ── Event Listeners ────────────────────────────────────────────────
+document.getElementById('calculate-btn').addEventListener('click', function () {
+  let ageDays;
+  const dob = document.getElementById('dob').value;
+
+  if (dob) {
+    const birthDate = new Date(dob);
+    const today = new Date();
+    ageDays = (today - birthDate) / (1000 * 60 * 60 * 24);
+    if (ageDays < 0) {
+      alert('Date of birth cannot be in the future.');
+      return;
+    }
+  } else {
+    const val  = parseFloat(document.getElementById('age-value').value);
+    const unit = document.getElementById('age-unit').value;
+    if (isNaN(val) || val < 0) {
+      alert('Please enter a valid age or date of birth.');
+      return;
+    }
+    ageDays = toDays(val, unit);
+  }
+
+  renderResults(ageDays);
+});
+
+document.getElementById('reset-btn').addEventListener('click', function () {
+  document.getElementById('dob').value = '';
+  document.getElementById('age-value').value = '';
+  document.getElementById('age-unit').value = 'months';
+  document.querySelectorAll('.contra').forEach(cb => { cb.checked = false; });
+  document.getElementById('results').classList.add('d-none');
+});
+
+// Allow Enter key on age input to trigger calculate
+document.getElementById('age-value').addEventListener('keydown', function (e) {
+  if (e.key === 'Enter') document.getElementById('calculate-btn').click();
+});
+</script>
+```
