@@ -1,0 +1,191 @@
+%Version 3 December 2023
+% See section 11 of the User Manual for version history
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%                                                                 %%
+%% Please do not use \input{...} to include other tex files.       %%
+%% Submit your LaTeX manuscript as one .tex document.              %%
+%%                                                                 %%
+%% All additional figures and files should be attached             %%
+%% separately and not embedded in the \TeX\ document itself.       %%
+%%                                                                 %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%\documentclass[referee,sn-basic]{sn-jnl}% referee option is meant for double line spacing
+
+%%=======================================================%%
+%% to print line numbers in the margin use lineno option %%
+%%=======================================================%%
+
+%%\documentclass[lineno,sn-basic]{sn-jnl}% Basic Springer Nature Reference Style/Chemistry Reference Style
+
+%%======================================================%%
+%% to compile with pdflatex/xelatex use pdflatex option %%
+%%======================================================%%
+
+%%\documentclass[pdflatex,sn-basic]{sn-jnl}% Basic Springer Nature Reference Style/Chemistry Reference Style
+
+%%Note: the following reference styles support Namedate and Numbered referencing. By default the style follows the most common style. To switch between the options you can add or remove Numbered in the optional parenthesis. 
+%%The option is available for: sn-basic.bst, sn-vancouver.bst, sn-chicago.bst%  
+ 
+\documentclass[pdflatex,sn-nature]{sn-jnl}% Style for submissions to Nature Portfolio journals
+%%\documentclass[pdflatex,sn-basic]{sn-jnl}% Basic Springer Nature Reference Style/Chemistry Reference Style
+%%\documentclass[pdflatex,sn-mathphys-num]{sn-jnl}% Math and Physical Sciences Numbered Reference Style 
+%%\documentclass[pdflatex,sn-mathphys-ay]{sn-jnl}% Math and Physical Sciences Author Year Reference Style
+%%\documentclass[pdflatex,sn-aps]{sn-jnl}% American Physical Society (APS) Reference Style
+%%\documentclass[pdflatex,sn-vancouver,Numbered]{sn-jnl}% Vancouver Reference Style
+%%\documentclass[pdflatex,sn-apa]{sn-jnl}% APA Reference Style 
+%%\documentclass[pdflatex,sn-chicago]{sn-jnl}% Chicago-based Humanities Reference Style
+
+%%%% Standard Packages
+%%<additional latex packages if required can be included here>
+
+\usepackage{graphicx}%
+\usepackage{epstopdf}
+\usepackage{multirow}%
+\usepackage{amsmath,amssymb,amsfonts}%
+\usepackage{amsthm}%
+\usepackage{mathrsfs}%
+\usepackage[title]{appendix}%
+\usepackage{xcolor}%
+\usepackage{textcomp}%
+\usepackage{manyfoot}%
+\usepackage{booktabs}%
+\usepackage{algorithm}%
+\usepackage{algorithmicx}%
+\usepackage{algpseudocode}%
+\usepackage{listings}%
+
+
+\begin{document}
+
+\input{manuscript/sections/00_title}
+\input{manuscript/sections/00_authors}
+\input{manuscript/sections/01_abstract}
+\keywords{\input{manuscript/sections/00_keywords}}
+
+%%\pacs[JEL Classification]{D8, H51}
+%%\pacs[MSC Classification]{35A01, 65L10, 65L12, 65L20, 65L70}
+
+\maketitle
+
+\section{Introduction}\label{sec1}
+\input{manuscript/sections/02_intro}
+
+\section{Results}\label{sec2}
+\input{manuscript/sections/03_results}
+
+\section{Equations}\label{sec4}
+\input{manuscript/sections/09_equations}
+
+\section{Tables}\label{sec5}
+\input{manuscript/data/tabs/tab_1}
+
+\section{Figures}\label{sec6}
+\input{manuscript/data/figs/fig_1}
+
+\section{Algorithms, Program codes and Listings}\label{sec7}
+\input{manuscript/sections/14_algorithms}
+
+%\section{Cross referencing}\label{sec8}
+
+\subsection{Details on reference citations}\label{subsec9}
+%\section{Examples for theorem like environments}\label{sec10}
+
+\section{Methods}\label{sec11}
+
+\input{manuscript/sections/05_methods}
+\input{manuscript/sections/05_methods_STAR}
+\input{manuscript/sections/05_methods_details}
+\input{manuscript/sections/14_quantification_and_statistical_analysis}
+\input{manuscript/sections/15_study_participants}
+\input{manuscript/sections/15_additional_resources}
+\input{manuscript/sections/16_key_resources_table}
+
+\section{Discussion}\label{sec12}
+
+\input{manuscript/sections/04_discussion}
+\input{manuscript/sections/04_limitations}
+
+\section{Conclusion}\label{sec13}
+\input{manuscript/sections/04_conclusion}
+
+
+\backmatter
+
+\bmhead{Supplementary information}
+
+\input{manuscript/sections/08_supplementary_index}
+\input{manuscript/sections/08_supplementary}
+
+\bmhead{Acknowledgements}
+\input{manuscript/sections/10_acknowledgements}
+
+\section*{Funding}
+\input{manuscript/sections/10_funding}
+
+\section*{Conflict of Interest}
+\input{manuscript/sections/12_declaration_of_interests}
+\input{manuscript/sections/13_declaration_of_ai}
+
+\section*{Consent for Publication}
+
+\section*{Data Availability}
+\input{manuscript/sections/06_data_availability}
+
+\section*{Code Availability}
+\input{manuscript/sections/07_code_availability}
+
+\section*{Author Contributions}
+\input{manuscript/sections/11_author_contributions}
+
+\noindent
+If any of the sections are not relevant to your manuscript, please include the heading and write `Not applicable' for that section. 
+
+%%===================================================%%
+%% For presentation purpose, we have included        %%
+%% \bigskip command. Please ignore this.             %%
+%%===================================================%%
+
+\bigskip
+\begin{flushleft}%
+Editorial Policies for:
+
+\bigskip\noindent
+Springer journals and proceedings: \url{https://www.springer.com/gp/editorial-policies}
+
+\bigskip\noindent
+Nature Portfolio journals: \url{https://www.nature.com/nature-research/editorial-policies}
+
+\bigskip\noindent
+\textit{Scientific Reports}: \url{https://www.nature.com/srep/journal-policies/editorial-policies}
+
+\bigskip\noindent
+BMC journals: \url{https://www.biomedcentral.com/getpublished/editorial-policies}
+\end{flushleft}
+
+\begin{appendices}
+
+\section{Section title of first appendix}
+
+An appendix contains supplementary information that is not an essential part of the text itself but which may be helpful in providing a more comprehensive understanding of the research problem or it is information that is too cumbersome to be included in the body of the paper.
+
+%%=============================================%%
+%% For submissions to Nature Portfolio Journals %%
+%% please use the heading ``Extended Data''.   %%
+%%=============================================%%
+
+%%=============================================================%%
+%% Sample for another appendix section			       %%
+%%=============================================================%%
+
+\section{Example of another appendix section}
+Appendices may be used for helpful, supporting or essential material that would otherwise 
+clutter, break up or be distracting to the text. Appendices can consist of sections, figures, 
+tables and equations etc.
+
+\end{appendices}
+
+\bibliography{manuscript/sections/references}% common bib file
+
+\end{document}

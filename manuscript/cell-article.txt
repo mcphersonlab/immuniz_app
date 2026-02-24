@@ -1,0 +1,18 @@
+
+EQUATIONS 
+
+Simple formulae should appear in line with the text whenever possible. You can write inline math by enclosing it between \verb|\(| and \verb|\)|, as in this example: \(x^2 + y^2 = z^2\). You can also enclose it between dollar signs (\texttt{\$}), as in this example: $E=mc^2$.
+
+Larger, more complex formulae may appear on a new line, either by enclosing them between \verb|\[| and \verb|\]| or by using the \verb|displaymath| environment:
+
+\[ x^n + y^n = z^n \]
+
+\begin{displaymath}
+\sqrt{x^2+1}
+\end{displaymath}
+
+If any equations or formulae need to be referred to or cited again later in the text, use the \verb|equation| environment to number them. Later, you can cite these as "Equation 1," "Equation 2," etc.
+
+\begin{equation}
+f(x) = \sum_{i=0}^{n} \frac{a_i}{1+x}
+\end{equation}

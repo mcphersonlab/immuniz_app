@@ -1,0 +1,69 @@
+\subsection{\LaTeX\ files}
+	Files from a project may be transferred directly to a selected ASM journal once for initial manuscript submission. A compiled PDF alone is acceptable for initial submission of a manuscript prepared in \LaTeX; refer to the \href{https://journals.asm.org/initial-submission-checklist}{\underline{Initial Submission Checklist}} for more details. At the revision stage, ASM requires all \LaTeX\ files from a project to be uploaded. On the journal submission site, the .tex file should be classified as a Manuscript Text File. Other supporting files that appear in the package (i.e., .bib, .bst, .cls, .ldf, and .sty files) should all be included and classified as \LaTeX\ Support Files. Figures should be classified as Figure files; see the \href{https://journals.asm.org/figures-tables}{\underline{guidance for figures}} for formatting requirements. At the revision stage, when the manuscript record already exists, any files requiring modification must be replaced. Contact \href{https://journals.asm.org/contact-us}{\underline{journal staff}} with questions related to file conversion in the manuscript record.
+
+\section{Sectioning commands}
+	Use \verb|\section|\ to get a first-level heading. You can use \verb|\subsection| or just \verb|\textbf| to get a subheading. Further sectioning levels, such as \verb|\subsubsection|, are ignored. First-level heads (boldface, all caps) for the Materials and Methods, Results, and Discussion sections are required only in full-length texts, research articles, resource reports, and methods and protocols. 
+
+\subsection{Reviews, minireviews, and Gems}
+	Reviews, minireviews, and Gems may have specific length limits and, for some journals, may be submitted by invitation only. Refer to the \href{https://journals.asm.org/links-to-journal-author-instructions}{\underline{specific instructions for individual journals}}, especially the pages on the Submission and Review Process and Article Types, for details. Instead of Materials and Methods, Results, and Discussion, these papers typically have first-level heads (boldface, all caps) delineating the desired major sections, as well as subsection heads as needed. Brief biographies of the authors and author photos may be included at the end of the manuscript (see the end of this template for more information). 
+
+\subsection{Citations and references}
+	This template uses BibTeX and natbib, so \verb|\citep| and \verb|\citet| such as \verb|\citep{caserta:etal:2012}|, \verb|\citet{johnson:robinson:2016}| can be used as usual to produce the correct citation style, and the reference list is generated automatically. In the References list, references are numbered in the order in which they are cited in the article (citation-sequence reference system). In the text, references are cited parenthetically by number in sequential order. Data that are not published or not peer reviewed are simply cited parenthetically in the text. For additional guidelines and examples, see \href{https://journals.asm.org/references}{\underline{this page}}. 
+
+    To assist review, figures should be placed where they are cited
+
+    \begin{figure}
+%\centering{\includegraphics[scale=2]{fpo.jpg}}
+\caption{This is an example figure with caption. Include each figure and its legend within the manuscript near where it is cited in the text.} \end{figure}
+
+	At the modification stage, separate production quality digital files must be provided for figures, and legends should appear after the References section in the main text. See the \href{https://journals.asm.org/figures-tables}{\underline{guidance for figures}} for formatting requirements. All graphics submitted with modified manuscripts should be grayscale or in the RGB color mode and should be at their intended publication size. 
+
+    \subsection{Tables}
+	The tabularx, booktabs, and siunitx packages are loaded by asm-article.cls; see \verb|\autoref{tab:example}| for an example table. Use \verb|\verb||\verb|\begin{fullwidth}...\end{fullwidth}|| in your table for the table to span the entire width of the page. Shading in the field of tables is allowed, to demonstrate relationships among data. You can use the \verb|\verb||\verb|\columncolor||, \verb|\verb||\verb|\rowcolor||, or \verb|\verb||\verb|\cellcolor|| commands to do this: allowed color values are \verb|\verb||\verb|black!20|| and \verb|\verb||\verb|black!30||. Here is an example (Table 1).
+
+\begin{table}
+\caption{Automobile land speed records (GR 5-10)$^a$}%
+\tabcolsep=7.5pt\noindent\begin{tabular*}{\textwidth}{@{\extracolsep\fill\hskip\tabcolsep}lp{5pc}>{\raggedright}p{6pc}>{\columncolor{black!20}}llp{8pc}<{\raggedright}@{\hskip\tabcolsep\extracolsep\fill}}\hline
+\rowcolor{black!20}\textbf{Speed} &  & & & & \textbf{Extra}\\
+\rowcolor{black!20}\textbf{(mph)} & \textbf{Driver} & \textbf{Car} & \textbf{Engine} & \textbf{Date} & \textbf{comments}\\\hline
+407.447 & Craig Breedlove & Spirit of America & GE J47    & 8/5/63 & (Just to demo a full-width table with auto-wrapping long lines)\\
+413.199 & Tom Green       & Wingfoot Express  &\cellcolor{black!30} WE J46    & 10/2/64 & \\
+434.22  & Art Arfons      & Green Monster     & GE J79    & 10/5/64 & \\
+526.277 & Craig Breedlove & Spirit of America & GE J79    & 10/15/64 & \\
+536.712 & Art Arfons      & Green Monster     & GE J79    & 10/27/65 & \\
+622.407 & Gary Gabelich   & Blue Flame        & Rocket    & 10/23/70 & \\
+633.468 & Richard Noble   & Thrust 2	      &\cellcolor{black!30} RR RG 146 &\cellcolor{black!20} 10/4/83  & \\
+763.468 & Andy Green      & Thrust SSc	      &\cellcolor{black!30} RR Spey   &\cellcolor{black!20} 10/15/97 & \\\hline
+\end{tabular*}%
+\begin{tablenotes}%
+\item[a]Table adapted from \burl{https://www.sedl.org/afterschool/toolkits/science/pdf/ast\_sci\_data\_tables\_sample.pdf} with permission.
+\end{tablenotes}
+%$^a$Table adapted from \burl{https://www.sedl.org/afterschool/toolkits/science/pdf/ast\_sci\_data\_tables\_sample.pdf} with permission.
+\end{table}
+
+
+Per ASM's \href{https://journals.asm.org/open-data-policy}{\underline{open data policy}}, a condition of publication in ASM journals is that authors make data fully available and without restriction, except in rare circumstances. Data availability will be confirmed prior to publication and must be provided during the modification stage, if not before. Upon request, data must also be made available for peer review. Include a data availability statement that contains a description of the data, name of the repository, and digital object identifiers (DOIs) or accession numbers.
+
+
+
+\subsection{Permission to use copyrighted material}
+	Authors are responsible for acquiring all necessary permissions related to reusing, adapting, or modifying copyrighted material from other sources and uploading these permissions as additional files during manuscript submission or otherwise forwarding them to ASM Journals staff. Proper attribution for any such material must be provided in the manuscript. 
+
+The Discussion section should provide an interpretation of the results in relation to previously published work and to the experimental system at hand and should not contain extensive repetition of the Results section or reiteration of the introduction. In shorter research papers, the Results and Discussion sections may be combined.
+
+\section{CLINICAL TRIALS}
+	Add clinical trial registry name and number here, if applicable.
+
+\section{ETHICS APPROVAL}
+	Provide an ethics approval statement for your study here, if applicable. 
+
+
+Statements regarding sources of direct financial support (e.g., grants, fellowships, scholarships, etc.), personal assistance, or contributor roles appear in this section.
+
+Add funding info here: funder name, grant number, and name of recipient author. 
+
+State all conflicts of interest here or say, ``The authors declare no conflict of interest.''
+
+If you have \href{https://journals.asm.org/supplemental-material}{\underline{supplemental material}} intended for posting by ASM, cite it in the manuscript but do NOT include the file(s) or legends in this template. Instead, in the journal submission portal, upload supplemental material separate from the main manuscript file(s) as either a single PDF (preferred) or individual files, with legends included in said file(s). References related only to the supplemental material should be included within the supplemental file(s) rather than in the References section of the main paper.
+
+Author biographies ($\leq$150 words each) and photos (black and white, passport size) can be inserted here. They are required for reviews in CMR and MMBR but optional for minireviews in other journals and Gems in JVI. Do not include them for primary-research articles. See the specific instructions for individual journals for more information.

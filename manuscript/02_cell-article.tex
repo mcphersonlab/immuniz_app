@@ -1,0 +1,180 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%  Welcome to the Cell Press LaTeX template,     
+%%%  version 1.10. This is a minimalist template    
+%%%  to help you organize your article for            
+%%%  publication at Cell Press. PLEASE NOTE:
+
+%%%  (1) If you submit your final manuscript materials 
+%%%  in LaTeX format, our typesetters will prepare 
+%%%  a Word file for use in production. This conversion 
+%%%  process allows us to copyedit your paper, fix 
+%%%  any typos, and add formatting and tagging. The 
+%%%  conversion process will add approximately 3 
+%%%  business days to the production timeline. 
+%%%  Authors using LaTeX should keep this in mind 
+%%%  when considering deadlines.
+
+%%%  (2) Keep your LaTeX files as simple as possible. 
+%%%  Avoid the use of elaborate local macros and/or 
+%%%  customized external style files. If you need 
+%%%  additional macros, please keep them simple and 
+%%%  include them in the actual .tex document preamble. 
+%%%  Source code should be set up so that all .sty 
+%%%  and .bst files called by the main .tex file are 
+%%%  in the same directory as the main .tex file. 
+
+%%%  (3) Cell Press publishes more than 40 journals, 
+%%%  some of which may have different or additional 
+%%%  formatting requirements not specified in this 
+%%%  template. When revising your paper before 
+%%%  acceptance, please review the formatting 
+%%%  guidelines, including the Final Files Requirements, 
+%%%  for the journal you are publishing with.
+
+%%%  Please send feedback on this template to lshipp@cell.com. 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[12pt,letterpaper]{article}
+\usepackage[a4paper, total={7in, 10in}]{geometry}
+\renewcommand{\familydefault}{\sfdefault}
+% PACKAGES
+\usepackage{epstopdf}
+\usepackage{graphicx}
+\usepackage{helvet}
+\usepackage{authblk}
+\usepackage{hyperref}
+\usepackage{amsmath} 
+\usepackage{amssymb} 
+\usepackage{orcidlink} 
+\usepackage[super,comma,sort&compress]  
+   {natbib}\bibliographystyle{cell-numbered}
+\usepackage[right]{lineno} \linenumbers
+
+
+\makeatletter
+\renewcommand{\maketitle}{\bgroup\setlength{\parindent}{0pt}
+\begin{flushleft}
+  \textbf{\@title}
+  
+  \@author
+\end{flushleft}\egroup}
+\makeatother
+
+%%%  Insert title below; leave date empty.
+
+\input{manuscript/sections/00_title}
+\date{}
+
+\input{manuscript/sections/00_authors}
+
+\begin{document}
+\maketitle
+
+\section*{SUMMARY}
+\input{manuscript/sections/01_abstract}
+
+\section*{KEYWORDS}
+\input{manuscript/sections/00_keywords}
+
+\section*{INTRODUCTION}
+\input{manuscript/sections/02_intro}
+
+\section*{RESULTS}
+\input{manuscript/sections/03_results}
+
+\subsection*{Equations}
+\input{manuscript/sections/09_equations}
+
+\section*{DISCUSSION}
+\input{manuscript/sections/04_discussion}
+
+\subsection*{Limitations of the study}
+\input{manuscript/sections/04_limitations}
+
+
+\newpage
+%\section*{METHODS}\input{manuscript/sections/05_methods}
+
+\section*{RESOURCE AVAILABILITY}
+\subsection*{Lead contact}
+\input{manuscript/sections/11_lead_contact}
+
+\subsection*{Materials availability}
+\input{manuscript/sections/05_materials}
+
+\subsection*{Data and code availability}
+\input{manuscript/sections/06_data_availability}
+\input{manuscript/sections/07_code_availability}
+
+\section*{ACKNOWLEDGMENTS}
+\input{manuscript/sections/10_acknowledgements}
+
+\section*{AUTHOR CONTRIBUTIONS}
+\input{manuscript/sections/11_author_contributions}
+
+\section*{DECLARATION OF INTERESTS}
+\input{manuscript/sections/12_declaration_of_interests}
+
+\section*{DECLARATION OF GENERATIVE AI AND AI-ASSISTED TECHNOLOGIES}
+\input{manuscript/sections/13_declaration_of_ai}
+
+
+\section*{SUPPLEMENTAL INFORMATION INDEX}
+\input{manuscript/sections/08_supplementary_index}
+
+
+\newpage
+\section*{MAIN FIGURE TITLES AND LEGENDS}
+\input{manuscript/data/figs/fig_1}\\
+\noindent\includegraphics[width=0.85\linewidth]{manuscript/data/figs/fig_1.eps}
+
+\newpage
+\section*{MAIN TABLES, INCLUDING TITLES AND LEGENDS}
+\input{manuscript/data/tabs/tab_1}
+
+\newpage
+\bibliography{manuscript/sections/references}
+
+\bigskip
+
+\newpage
+\section*{STAR METHODS}
+\input{manuscript/sections/05_methods_STAR}
+
+\subsection*{Key resources table}
+\input{manuscript/sections/16_key_resources_table}
+
+\subsection*{Experimental model and study participant details}
+\input{manuscript/sections/15_study_participants}
+
+\subsection*{Method details}
+\input{manuscript/sections/05_methods_details}
+
+\subsection*{Quantification and statistical analysis}
+\input{manuscript/sections/14_algorithms}
+\input{manuscript/sections/14_quantification_and_statistical_analysis}
+
+\subsection*{Additional resources}
+\input{manuscript/sections/15_additional_resources}
+
+Cell.com homepage: https://www.cell.com
+\newline Templates for Cell Press authors: https://www.cell.com/article-templates
+
+%%%  ADDITIONAL MANUSCRIPT COMPONENTS:
+
+%%%  Depending on the journal and the article 
+%%%  type, you may be asked to upload the 
+%%%  following as separate files: graphical 
+%%%  abstract, highlights, eTOC blurb (In 
+%%%  Brief), and/or other article components 
+%%%  such as a "bigger picture" statement. 
+%%%  These items are typically not required for 
+%%%  initial submissions. Please refer to the 
+%%%  journal's website, your acceptance 
+%%%  letter, and/or the Final Files 
+%%%  Requirements checklist to see if any of
+%%%  these items are required (at any stage).
+
+\end{document}

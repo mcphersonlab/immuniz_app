@@ -1,0 +1,219 @@
+% Unified authors file for ASM, Cell Press, and Springer Nature (sn-jnl)
+% Edit ONLY the "DATA ENTRY" section. The rest renders per journal.
+%
+% Detection:
+% - Springer Nature: \orgdiv (sn-jnl)
+% - Cell Press: \orcidlink (cell template)
+% - ASM: \afn (asm-article)
+%
+% If you have fewer authors, comment out extra author lines in each journal block.
+
+% ========== DATA ENTRY: EDIT BELOW THIS LINE ==========
+
+% Author 1
+\def\AOneFirst{Jacob}
+\def\AOneMiddle{K.}
+\def\AOneLast{McPherson}
+\def\AOneSuffix{}
+\def\AOneAffils{1,7}       % numeric indices (Cell/SN); ASM uses text \affil lines below
+\def\AOneEmail{jkmcpherson@uh.edu}           % email for SN/Cell corresponding authors
+\def\AOneORCID{0000-0001-5486-4945}
+\def\AOneCellNotes{}       % e.g., "5" for equal contribution note footnote
+\def\AOneCellCorrMark{*}    % "", "*", "**", ...
+\def\AOneEqual{}           % "yes" if SN equal contribution, else empty
+
+% Author 2
+\def\ATwoFirst{First}
+\def\ATwoMiddle{Middle}
+\def\ATwoLast{Last}
+\def\ATwoSuffix{}
+\def\ATwoAffils{1,2}
+\def\ATwoEmail{}
+\def\ATwoORCID{}
+\def\ATwoCellNotes{}
+\def\ATwoCellCorrMark{}
+\def\ATwoEqual{yes}
+
+% Author 3
+\def\AThreeFirst{First}
+\def\AThreeMiddle{M.M.}
+\def\AThreeLast{Last}
+\def\AThreeSuffix{}
+\def\AThreeAffils{2}
+\def\AThreeEmail{}
+\def\AThreeORCID{}
+\def\AThreeCellNotes{}
+\def\AThreeCellCorrMark{}
+\def\AThreeEqual{}
+
+% Author 4 (corresponding)
+\def\AFourFirst{First}
+\def\AFourMiddle{}
+\def\AFourLast{Last}
+\def\AFourSuffix{Jr.}
+\def\AFourAffils{3}
+\def\AFourEmail{test@gmail.com}
+\def\AFourORCID{}
+\def\AFourCellNotes{6}
+\def\AFourCellCorrMark{}
+\def\AFourEqual{yes}
+
+% Author 5 (corresponding, equal)
+\def\AFiveFirst{F.}
+\def\AFiveMiddle{Middle}
+\def\AFiveLast{Last}
+\def\AFiveSuffix{}
+\def\AFiveAffils{1}
+\def\AFiveEmail{kgarey@uh.edu}
+\def\AFiveORCID{}
+\def\AFiveCellNotes{4,6,8} % present addr, senior, twitter, lead contact
+\def\AFiveCellCorrMark{**}
+\def\AFiveEqual{yes}
+
+% Affiliations text (used by Cell/SN as numbered, by ASM as plain lines)
+\def\AffilTextOne{University A, London SW7 2AZ, UK}
+\def\AffilTextTwo{Department B, University B, Toronto, ON M5S 3H6, Canada}
+\def\AffilTextThree{Division C, Department C, University C, Cambridge, MA, USA}
+
+% Cell-only special footnotes (optional)
+\def\CellFootnoteTextFour{Present address: 123 Sesame Street, New York, NY, USA}
+\def\CellFootnoteTextFive{These authors contributed equally}
+\def\CellFootnoteTextSix{Senior author}
+\def\CellFootnoteTextSeven{Twitter: @JacobKMcPherson}
+\def\CellFootnoteTextEight{Lead contact}
+
+% Cell-only: correspondence lines for *, ** (add more if needed)
+\def\CellCorrespondenceStarOne{Correspondence: \AOneEmail} % *
+\def\CellCorrespondenceStarTwo{Correspondence: \AFiveEmail} % **
+
+% SN-only: equal contribution text
+\def\SNequalcontText{These authors contributed equally to this work.}
+
+% ASM-only: correspondence and present-address/contributions blocks
+\def\ASMcorraddress{Address correspondence to \AOneEmail}
+\def\ASMpresentaddress{Present address: \CellFootnoteTextFour
+
+First Author and F. Middle Last contributed equally to this work. Author order was determined by XXXX.
+
+First Last, Jr. and F. Middle Last are co-senior authors.
+}
+
+% ========== DO NOT EDIT BELOW THIS LINE ==========
+
+% Helper: full names
+\def\FullNameOne{\AOneFirst\ifx\AOneMiddle\empty\else\ \AOneMiddle\fi\ \AOneLast\ifx\AOneSuffix\empty\else, \AOneSuffix\fi}
+\def\FullNameTwo{\ATwoFirst\ifx\ATwoMiddle\empty\else\ \ATwoMiddle\fi\ \ATwoLast\ifx\ATwoSuffix\empty\else, \ATwoSuffix\fi}
+\def\FullNameThree{\AThreeFirst\ifx\AThreeMiddle\empty\else\ \AThreeMiddle\fi\ \AThreeLast\ifx\AThreeSuffix\empty\else, \AThreeSuffix\fi}
+\def\FullNameFour{\AFourFirst\ifx\AFourMiddle\empty\else\ \AFourMiddle\fi\ \AFourLast\ifx\AFourSuffix\empty\else, \AFourSuffix\fi}
+\def\FullNameFive{\AFiveFirst\ifx\AFiveMiddle\empty\else\ \AFiveMiddle\fi\ \AFiveLast\ifx\AFiveSuffix\empty\else, \AFiveSuffix\fi}
+
+% Helper: ASM affn indices + * if corresponding
+\def\ASMIdxOne{\AOneAffils\ifx\AOneCellCorrMark\empty\else*\fi}
+\def\ASMIdxTwo{\ATwoAffils\ifx\ATwoCellCorrMark\empty\else*\fi}
+\def\ASMIdxThree{\AThreeAffils\ifx\AThreeCellCorrMark\empty\else*\fi}
+\def\ASMIdxFour{\AFourAffils\ifx\AFourCellCorrMark\empty\else*\fi}
+\def\ASMIdxFive{\AFiveAffils\ifx\AFiveCellCorrMark\empty\else*\fi}
+
+% Helper: Cell optional bracket parts (each includes its own leading comma if non-empty)
+% Author 1
+\def\AOneCellNotesOpt{}\ifx\AOneCellNotes\empty\else\def\AOneCellNotesOpt{,\AOneCellNotes}\fi
+\def\AOneCellCorrOpt{}\ifx\AOneCellCorrMark\empty\else\def\AOneCellCorrOpt{,\AOneCellCorrMark}\fi
+\def\AOneCellOrcidOpt{}\ifx\AOneORCID\empty\else\def\AOneCellOrcidOpt{,\orcidlink{\AOneORCID}}\fi
+% Author 2
+\def\ATwoCellNotesOpt{}\ifx\ATwoCellNotes\empty\else\def\ATwoCellNotesOpt{,\ATwoCellNotes}\fi
+\def\ATwoCellCorrOpt{}\ifx\ATwoCellCorrMark\empty\else\def\ATwoCellCorrOpt{,\ATwoCellCorrMark}\fi
+\def\ATwoCellOrcidOpt{}\ifx\ATwoORCID\empty\else\def\ATwoCellOrcidOpt{,\orcidlink{\ATwoORCID}}\fi
+% Author 3
+\def\AThreeCellNotesOpt{}\ifx\AThreeCellNotes\empty\else\def\AThreeCellNotesOpt{,\AThreeCellNotes}\fi
+\def\AThreeCellCorrOpt{}\ifx\AThreeCellCorrMark\empty\else\def\AThreeCellCorrOpt{,\AThreeCellCorrMark}\fi
+\def\AThreeCellOrcidOpt{}\ifx\AThreeORCID\empty\else\def\AThreeCellOrcidOpt{,\orcidlink{\AThreeORCID}}\fi
+% Author 4
+\def\AFourCellNotesOpt{}\ifx\AFourCellNotes\empty\else\def\AFourCellNotesOpt{,\AFourCellNotes}\fi
+\def\AFourCellCorrOpt{}\ifx\AFourCellCorrMark\empty\else\def\AFourCellCorrOpt{,\AFourCellCorrMark}\fi
+\def\AFourCellOrcidOpt{}\ifx\AFourORCID\empty\else\def\AFourCellOrcidOpt{,\orcidlink{\AFourORCID}}\fi
+% Author 5
+\def\AFiveCellNotesOpt{}\ifx\AFiveCellNotes\empty\else\def\AFiveCellNotesOpt{,\AFiveCellNotes}\fi
+\def\AFiveCellCorrOpt{}\ifx\AFiveCellCorrMark\empty\else\def\AFiveCellCorrOpt{,\AFiveCellCorrMark}\fi
+\def\AFiveCellOrcidOpt{}\ifx\AFiveORCID\empty\else\def\AFiveCellOrcidOpt{,\orcidlink{\AFiveORCID}}\fi
+
+% Helper: SN name pieces
+\def\AOneFirstMiddle{\AOneFirst\ifx\AOneMiddle\empty\else\ \AOneMiddle\fi}
+\def\ATwoFirstMiddle{\ATwoFirst\ifx\ATwoMiddle\empty\else\ \ATwoMiddle\fi}
+\def\AThreeFirstMiddle{\AThreeFirst\ifx\AThreeMiddle\empty\else\ \AThreeMiddle\fi}
+\def\AFourFirstMiddle{\AFourFirst\ifx\AFourMiddle\empty\else\ \AFourMiddle\fi}
+\def\AFiveFirstMiddle{\AFiveFirst\ifx\AFiveMiddle\empty\else\ \AFiveMiddle\fi}
+
+% ========== Springer Nature ==========
+\ifdefined\orgdiv
+  % STAR one and only one SN author (choose the one with the main correspondence email)
+  
+  % Other authors (unstarred). Comment out any you don't need.
+  \author*[{\AOneAffils}]{\fnm{\AOneFirstMiddle}\sur{\AOneLast}}
+  \ifx\AOneEmail\empty\else\email{\AOneEmail}\fi
+  \ifx\AOneEqual\empty\else\equalcont{\SNequalcontText}\fi
+
+  \author[{\ATwoAffils}]{\fnm{\ATwoFirstMiddle}\sur{\ATwoLast}}
+  \ifx\ATwoEmail\empty\else\email{\ATwoEmail}\fi
+  \ifx\ATwoEqual\empty\else\equalcont{\SNequalcontText}\fi
+
+  \author[{\AThreeAffils}]{\fnm{\AThreeFirstMiddle}\sur{\AThreeLast}}
+  \ifx\AThreeEmail\empty\else\email{\AThreeEmail}\fi
+  \ifx\AThreeEqual\empty\else\equalcont{\SNequalcontText}\fi
+
+  \author[{\AFourAffils}]{\fnm{\AFourFirstMiddle}\sur{\AFourLast}}\email{\AFourEmail}
+  \ifx\AFourEqual\empty\else\equalcont{\SNequalcontText}\fi
+
+  \author[{\AFiveAffils}]{\fnm{\AFiveFirstMiddle}\sur{\AFiveLast}}
+  \ifx\AFiveEmail\empty\else\email{\AFiveEmail}\fi
+  \ifx\AFiveEqual\empty\else\equalcont{\SNequalcontText}\fi
+
+  % Affiliations
+  \affil[1]{\AffilTextOne}
+  \affil[2]{\AffilTextTwo}
+  \affil[3]{\AffilTextThree}
+
+% ========== Cell Press (article + authblk + orcidlink) ==========
+\else\ifdefined\orcidlink
+  % Authors (comment out any you don't need)
+  \author[{\AOneAffils\AOneCellNotesOpt\AOneCellCorrOpt\AOneCellOrcidOpt}]{\FullNameOne}
+  \author[{\ATwoAffils\ATwoCellNotesOpt\ATwoCellCorrOpt\ATwoCellOrcidOpt}]{\FullNameTwo}
+  \author[{\AThreeAffils\AThreeCellNotesOpt\AThreeCellCorrOpt\AThreeCellOrcidOpt}]{\FullNameThree}
+  \author[{\AFourAffils\AFourCellNotesOpt\AFourCellCorrOpt\AFourCellOrcidOpt}]{\FullNameFour}
+  \author[{\AFiveAffils\AFiveCellNotesOpt\AFiveCellCorrOpt\AFiveCellOrcidOpt}]{\FullNameFive}
+
+  % Affiliations
+  \affil[1]{\AffilTextOne}
+  \affil[2]{\AffilTextTwo}
+  \affil[3]{\AffilTextThree}
+
+  % Cell special footnotes (optional)
+  \ifx\CellFootnoteTextFour\empty\else \affil[4]{\CellFootnoteTextFour}\fi
+  \ifx\CellFootnoteTextFive\empty\else \affil[5]{\CellFootnoteTextFive}\fi
+  \ifx\CellFootnoteTextSix\empty\else \affil[6]{\CellFootnoteTextSix}\fi
+  \ifx\CellFootnoteTextSeven\empty\else \affil[7]{\CellFootnoteTextSeven}\fi
+  \ifx\CellFootnoteTextEight\empty\else \affil[8]{\CellFootnoteTextEight}\fi
+
+  % Cell corresponding lines for *, ** (add more if needed)
+  \ifx\CellCorrespondenceStarOne\empty\else \affil[*]{\CellCorrespondenceStarOne}\fi
+  \ifx\CellCorrespondenceStarTwo\empty\else \affil[**]{\CellCorrespondenceStarTwo}\fi
+
+% ========== ASM (asm-article) ==========
+\else\ifdefined\afn
+  % Single \author line using \afn indices (append * if CellCorrMark is set)
+  \author{\FullNameOne\afn{\ASMIdxOne}, \FullNameTwo\afn{\ASMIdxTwo}, \FullNameThree\afn{\ASMIdxThree}, \FullNameFour\afn{\ASMIdxFour}, \FullNameFive\afn{\ASMIdxFive}}
+
+  % Affiliations (plain lines)
+  \affil{\AffilTextOne}
+  \affil{\AffilTextTwo}
+  \affil{\AffilTextThree}
+
+  % Correspondence/present address blocks
+  \corraddress{\ASMcorraddress}
+  \presentaddress{\ASMpresentaddress}
+
+% ========== Fallback ==========
+\else
+  % Minimal fallback if detection fails (edit as needed)
+  \author{\FullNameOne, \FullNameTwo, \FullNameThree, \FullNameFour, \FullNameFive}
+  \date{}
+\fi\fi\fi

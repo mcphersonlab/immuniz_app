@@ -1,0 +1,6 @@
+CHANGELOG
+
+
+7/19/24: Added usepackage { orcidlink }, updated reference examples and adjusted some formatting
+
+
