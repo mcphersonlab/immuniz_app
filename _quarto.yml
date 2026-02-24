@@ -1,0 +1,22 @@
+project:
+  type: website
+  output-dir: _site
+
+website:
+  title: "Pediatric Immunization Scheduler"
+  description: "Interactive AAP-recommended vaccine schedule with contraindication checks"
+  favicon: thinking.png
+  navbar:
+    left:
+      - href: index.qmd
+        text: Vaccine Scheduler
+  page-footer:
+    center: |
+      Based on the [AAP/ACIP recommended immunization schedule](https://www.aap.org/en/patient-care/immunizations/immunization-schedule/).
+      For clinical decision support only — always verify with current guidelines.
+
+format:
+  html:
+    theme: cosmo
+    toc: false
+    page-layout: full

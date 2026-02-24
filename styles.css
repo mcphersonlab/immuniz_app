@@ -1,0 +1,32 @@
+/* Pediatric Immunization Scheduler – custom styles */
+
+#app {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.card-header h5 {
+  font-size: 1rem;
+}
+
+.table th,
+.table td {
+  font-size: 0.875rem;
+  vertical-align: middle;
+}
+
+.form-check-label {
+  font-size: 0.875rem;
+}
+
+#age-banner {
+  font-size: 1rem;
+}
+
+/* Tighten spacing on small screens */
+@media (max-width: 576px) {
+  .card-body {
+    padding: 0.75rem;
+  }
+}
