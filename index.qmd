@@ -939,8 +939,8 @@ function ageWindowLabel(minDays, maxDays) {
   return `${ageLabel(minDays)} – ${ageLabel(maxDays)}`;
 }
 
-function computeSchedule(ageDays) {
-  const selectedContra = getSelectedContra();
+function computeSchedule(ageDays, contraKeys) {
+  const selectedContra = contraKeys !== undefined ? contraKeys : getSelectedContra();
   const contraSet = new Set(selectedContra);
 
   const recommended = [];
