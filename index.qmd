@@ -37,12 +37,10 @@ format:
                   <option value="years">years</option>
                 </select>
               </div>
+              <div class="form-text">default: Months</div>
             </div>
 
             <div class="col-md-6 d-flex align-items-end">
-              <button id="calculate-btn" class="btn btn-primary me-2">
-                &#128269; Calculate Schedule
-              </button>
               <button id="reset-btn" class="btn btn-outline-secondary">
                 &#x21BA; Reset
               </button>
@@ -175,58 +173,6 @@ format:
       </div>
     </div>
 
-    <!-- Recommended Now -->
-    <div class="row g-4 mb-4">
-      <div class="col-12">
-        <div class="card shadow-sm border-success">
-          <div class="card-header bg-success text-white">
-            <h5 class="mb-0">&#10003; Vaccines Recommended Now</h5>
-          </div>
-          <div class="card-body p-0">
-            <div id="recommended-now" class="table-responsive">
-              <table class="table table-striped table-hover mb-0">
-                <thead class="table-light">
-                  <tr>
-                    <th>Vaccine</th>
-                    <th>Series / Dose</th>
-                    <th>Notes</th>
-                  </tr>
-                </thead>
-                <tbody id="recommended-now-body"></tbody>
-              </table>
-            </div>
-            <div id="no-recommended" class="p-3 text-muted d-none">No vaccines are due at this age.</div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Catch-up -->
-    <div class="row g-4 mb-4" id="catchup-section">
-      <div class="col-12">
-        <div class="card shadow-sm border-warning">
-          <div class="card-header bg-warning">
-            <h5 class="mb-0">&#9200; Catch-Up Vaccines</h5>
-          </div>
-          <div class="card-body p-0">
-            <div class="table-responsive">
-              <table class="table table-striped table-hover mb-0">
-                <thead class="table-light">
-                  <tr>
-                    <th>Vaccine</th>
-                    <th>Series / Dose</th>
-                    <th>Notes</th>
-                  </tr>
-                </thead>
-                <tbody id="catchup-body"></tbody>
-              </table>
-            </div>
-            <div id="no-catchup" class="p-3 text-muted d-none">No catch-up vaccines needed.</div>
-          </div>
-        </div>
-      </div>
-    </div>
-
     <!-- Contraindicated / Precaution -->
     <div class="row g-4 mb-4" id="contra-section">
       <div class="col-12">
@@ -253,6 +199,60 @@ format:
       </div>
     </div>
 
+    <!-- Recommended Now -->
+    <div class="row g-4 mb-4">
+      <div class="col-12">
+        <div class="card shadow-sm border-success">
+          <div class="card-header bg-success text-white">
+            <h5 class="mb-0">&#10003; Vaccines Recommended Now</h5>
+          </div>
+          <div class="card-body p-0">
+            <div id="recommended-now" class="table-responsive">
+              <table class="table table-striped table-hover mb-0">
+                <thead class="table-light">
+                  <tr>
+                    <th>Vaccine</th>
+                    <th>Series / Dose</th>
+                    <th>Notes</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="recommended-now-body"></tbody>
+              </table>
+            </div>
+            <div id="no-recommended" class="p-3 text-muted d-none">No vaccines are due at this age.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Catch-up -->
+    <div class="row g-4 mb-4" id="catchup-section">
+      <div class="col-12">
+        <div class="card shadow-sm border-warning">
+          <div class="card-header bg-warning">
+            <h5 class="mb-0">&#9200; Catch-Up Vaccines</h5>
+          </div>
+          <div class="card-body p-0">
+            <div class="table-responsive">
+              <table class="table table-striped table-hover mb-0">
+                <thead class="table-light">
+                  <tr>
+                    <th>Vaccine</th>
+                    <th>Series / Dose</th>
+                    <th>Notes</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="catchup-body"></tbody>
+              </table>
+            </div>
+            <div id="no-catchup" class="p-3 text-muted d-none">No catch-up vaccines needed.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- Risk-based -->
     <div class="row g-4 mb-4" id="risk-section">
       <div class="col-12">
@@ -274,6 +274,33 @@ format:
               </table>
             </div>
             <div id="no-risk" class="p-3 text-muted d-none">No additional risk-based vaccines apply.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Previously Received -->
+    <div class="row g-4 mb-4" id="received-section">
+      <div class="col-12">
+        <div class="card shadow-sm border-secondary">
+          <div class="card-header bg-secondary text-white">
+            <h5 class="mb-0">&#128203; Previously Received Vaccines</h5>
+          </div>
+          <div class="card-body p-0">
+            <div class="table-responsive">
+              <table class="table table-striped table-hover mb-0">
+                <thead class="table-light">
+                  <tr>
+                    <th>Vaccine</th>
+                    <th>Series / Dose</th>
+                    <th>Notes</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="received-body"></tbody>
+              </table>
+            </div>
+            <div id="no-received" class="p-3 text-muted d-none">No vaccines marked as received.</div>
           </div>
         </div>
       </div>
@@ -1021,8 +1048,11 @@ function computeSchedule(ageDays, contraKeys) {
   return { recommended, catchup, contraItems, riskBased };
 }
 
+// ── Received vaccines state ────────────────────────────────────────
+const receivedSet = new Set();
+
 // ── Render ─────────────────────────────────────────────────────────
-function renderTable(tbodyId, rows, columns, emptyId) {
+function renderTable(tbodyId, rows, columns, emptyId, rowAction) {
   const tbody = document.getElementById(tbodyId);
   const emptyDiv = document.getElementById(emptyId);
   tbody.innerHTML = '';
@@ -1040,6 +1070,11 @@ function renderTable(tbodyId, rows, columns, emptyId) {
       td.textContent = row[col] ?? '';
       tr.appendChild(td);
     });
+    if (rowAction) {
+      const td = document.createElement('td');
+      td.appendChild(rowAction(row));
+      tr.appendChild(td);
+    }
     tbody.appendChild(tr);
   });
 }
@@ -1050,11 +1085,44 @@ function renderResults(ageDays) {
   document.getElementById('age-banner').textContent =
     `Patient age: ${ageLabel(ageDays)}`;
 
-  renderTable('recommended-now-body', recommended,
-    ['vaccine', 'series', 'notes'], 'no-recommended');
+  // Separate received vaccines from recommended/catchup
+  const received = [];
+  const filteredRecommended = recommended.filter(row => {
+    if (receivedSet.has(`${row.abbr}|||${row.series}`)) { received.push(row); return false; }
+    return true;
+  });
+  const filteredCatchup = catchup.filter(row => {
+    if (receivedSet.has(`${row.abbr}|||${row.series}`)) { received.push(row); return false; }
+    return true;
+  });
 
-  renderTable('catchup-body', catchup,
-    ['vaccine', 'series', 'notes'], 'no-catchup');
+  function makeMarkReceivedBtn(row) {
+    const btn = document.createElement('button');
+    btn.className = 'btn btn-sm btn-outline-secondary';
+    btn.textContent = 'Mark as Received';
+    btn.addEventListener('click', function () {
+      receivedSet.add(`${row.abbr}|||${row.series}`);
+      renderResults(ageDays);
+    });
+    return btn;
+  }
+
+  function makeUnmarkReceivedBtn(row) {
+    const btn = document.createElement('button');
+    btn.className = 'btn btn-sm btn-outline-danger';
+    btn.textContent = 'Undo';
+    btn.addEventListener('click', function () {
+      receivedSet.delete(`${row.abbr}|||${row.series}`);
+      renderResults(ageDays);
+    });
+    return btn;
+  }
+
+  renderTable('recommended-now-body', filteredRecommended,
+    ['vaccine', 'series', 'notes'], 'no-recommended', makeMarkReceivedBtn);
+
+  renderTable('catchup-body', filteredCatchup,
+    ['vaccine', 'series', 'notes'], 'no-catchup', makeMarkReceivedBtn);
 
   // Contra table has different columns
   const contraBody = document.getElementById('contra-body');
@@ -1093,33 +1161,44 @@ function renderResults(ageDays) {
   renderTable('risk-body', riskBased,
     ['vaccine', 'series', 'indication'], 'no-risk');
 
+  renderTable('received-body', received,
+    ['vaccine', 'series', 'notes'], 'no-received', makeUnmarkReceivedBtn);
+
   document.getElementById('results').classList.remove('d-none');
 }
 
-// ── Event Listeners ────────────────────────────────────────────────
-document.getElementById('calculate-btn').addEventListener('click', function () {
-  let ageDays;
+// ── Auto-update logic ──────────────────────────────────────────────
+function autoUpdate() {
   const dob = document.getElementById('dob').value;
+  const ageVal = document.getElementById('age-value').value;
+  let ageDays;
 
   if (dob) {
     const birthDate = new Date(dob);
     const today = new Date();
     ageDays = (today - birthDate) / (1000 * 60 * 60 * 24);
     if (ageDays < 0) {
-      alert('Date of birth cannot be in the future.');
+      document.getElementById('results').classList.add('d-none');
       return;
     }
-  } else {
-    const val  = parseFloat(document.getElementById('age-value').value);
+  } else if (ageVal !== '') {
+    const val  = parseFloat(ageVal);
     const unit = document.getElementById('age-unit').value;
-    if (isNaN(val) || val < 0) {
-      alert('Please enter a valid age or date of birth.');
-      return;
-    }
+    if (isNaN(val) || val < 0) return;
     ageDays = toDays(val, unit);
+  } else {
+    return;
   }
 
   renderResults(ageDays);
+}
+
+// ── Event Listeners ────────────────────────────────────────────────
+document.getElementById('dob').addEventListener('input', autoUpdate);
+document.getElementById('age-value').addEventListener('input', autoUpdate);
+document.getElementById('age-unit').addEventListener('change', autoUpdate);
+document.querySelectorAll('.contra').forEach(cb => {
+  cb.addEventListener('change', autoUpdate);
 });
 
 document.getElementById('reset-btn').addEventListener('click', function () {
@@ -1127,12 +1206,8 @@ document.getElementById('reset-btn').addEventListener('click', function () {
   document.getElementById('age-value').value = '';
   document.getElementById('age-unit').value = 'months';
   document.querySelectorAll('.contra').forEach(cb => { cb.checked = false; });
+  receivedSet.clear();
   document.getElementById('results').classList.add('d-none');
-});
-
-// Allow Enter key on age input to trigger calculate
-document.getElementById('age-value').addEventListener('keydown', function (e) {
-  if (e.key === 'Enter') document.getElementById('calculate-btn').click();
 });
 </script>
 ```
