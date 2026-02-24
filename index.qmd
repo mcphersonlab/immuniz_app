@@ -630,7 +630,7 @@ const SCHEDULE = [
     catchupMinDays: toDays(6, 'weeks'),
     catchupMaxDays: toDays(18, 'years'),
     notes: "Minimum age 6 weeks.",
-    contraindications: ['prev-reaction', 'allergy-neomycin', 'allergy-streptomycin', 'allergy-polymyxin-b'],
+    contraindications: ['prev-reaction', 'allergy-neomycin'],
     precautions: [],
     liveVaccine: false,
     riskBased: false
@@ -1035,7 +1035,11 @@ function renderTable(tbodyId, rows, columns, emptyId) {
   tbody.closest('div').classList.remove('d-none');
   rows.forEach(row => {
     const tr = document.createElement('tr');
-    tr.innerHTML = columns.map(col => `<td>${row[col] ?? ''}</td>`).join('');
+    columns.forEach(col => {
+      const td = document.createElement('td');
+      td.textContent = row[col] ?? '';
+      tr.appendChild(td);
+    });
     tbody.appendChild(tr);
   });
 }
@@ -1064,10 +1068,24 @@ function renderResults(ageDays) {
     contraBody.closest('div').classList.remove('d-none');
     contraItems.forEach(item => {
       const tr = document.createElement('tr');
-      const badgeClass = item.type === 'Contraindication' ? 'bg-danger' : 'bg-warning text-dark';
-      tr.innerHTML = `<td>${item.vaccine} (${item.abbr})</td>
-        <td><span class="badge ${badgeClass}">${item.type}</span></td>
-        <td>${item.reason}</td>`;
+
+      const td1 = document.createElement('td');
+      td1.textContent = `${item.vaccine} (${item.abbr})`;
+      tr.appendChild(td1);
+
+      const td2 = document.createElement('td');
+      const badge = document.createElement('span');
+      badge.className = item.type === 'Contraindication'
+        ? 'badge bg-danger'
+        : 'badge bg-warning text-dark';
+      badge.textContent = item.type;
+      td2.appendChild(badge);
+      tr.appendChild(td2);
+
+      const td3 = document.createElement('td');
+      td3.textContent = item.reason;
+      tr.appendChild(td3);
+
       contraBody.appendChild(tr);
     });
   }
