@@ -1,6 +1,6 @@
 ---
 title: "Immunization Scheduler (All Ages)"
-subtitle: "ACIP Recommended Vaccine Schedule for Pediatric and Adult Patients"
+subtitle: "AAP/ACIP Recommended Vaccine Schedule for Pediatric and Adult Patients"
 format:
   html:
     page-layout: full
@@ -338,9 +338,9 @@ format:
       <div class="col-12">
         <div class="alert alert-secondary small">
           <strong>&#9888; Disclaimer:</strong> This tool is intended as a clinical decision-support aid based on the
-          <a href="https://www.cdc.gov/vaccines/schedules/" target="_blank">ACIP recommended immunization schedule for children, adolescents, and adults</a>.
-          It does not replace clinical judgment or real-time CDC/ACIP/AAP guidelines. Always verify doses already given,
-          check current VIS sheets, and consult the most recent ACIP recommendations before administering vaccines.
+          <a href="https://www.cdc.gov/vaccines/schedules/" target="_blank">AAP/ACIP recommended immunization schedule for children, adolescents, and adults</a>.
+          It does not replace clinical judgment or real-time CDC/AAP/ACIP guidelines. Always verify doses already given,
+          check current VIS sheets, and consult the most recent AAP/ACIP recommendations before administering vaccines.
         </div>
       </div>
     </div>
