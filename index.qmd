@@ -1193,9 +1193,26 @@ function autoUpdate() {
   renderResults(ageDays);
 }
 
+// Simple debounce helper to avoid excessive recomputation on frequent inputs
+function debounce(fn, delay) {
+  let timeoutId;
+  return function (...args) {
+    const context = this;
+    if (timeoutId) {
+      clearTimeout(timeoutId);
+    }
+    timeoutId = setTimeout(function () {
+      fn.apply(context, args);
+    }, delay);
+  };
+}
+
+// Debounced version of autoUpdate for age-value input
+const debouncedAutoUpdateForAge = debounce(autoUpdate, 400);
+
 // ── Event Listeners ────────────────────────────────────────────────
 document.getElementById('dob').addEventListener('input', autoUpdate);
-document.getElementById('age-value').addEventListener('input', autoUpdate);
+document.getElementById('age-value').addEventListener('input', debouncedAutoUpdateForAge);
 document.getElementById('age-unit').addEventListener('change', autoUpdate);
 document.querySelectorAll('.contra').forEach(cb => {
   cb.addEventListener('change', autoUpdate);
