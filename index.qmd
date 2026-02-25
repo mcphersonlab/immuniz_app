@@ -54,7 +54,7 @@ format:
         <div class="row g-2">
 
           <!-- Column 1: Allergies -->
-          <div class="col-4">
+          <div class="col-6">
             <p class="fw-semibold text-secondary small mb-1">Allergies</p>
             <div class="form-check">
               <input class="form-check-input contra" type="checkbox" id="c-allergy-egg" value="allergy-egg" />
@@ -82,8 +82,8 @@ format:
             </div>
           </div><!-- /allergies col -->
 
-          <!-- Column 2: Immune Status -->
-          <div class="col-4">
+          <!-- Column 2: Immune Status + Other -->
+          <div class="col-6">
             <p class="fw-semibold text-secondary small mb-1">Immune Status</p>
             <div class="form-check">
               <input class="form-check-input contra" type="checkbox" id="c-immunocompromised" value="immunocompromised" />
@@ -121,16 +121,13 @@ format:
               <input class="form-check-input contra" type="checkbox" id="c-asplenia" value="asplenia" />
               <label class="form-check-label small" for="c-asplenia">Asplenia / functional asplenia (e.g., sickle cell)</label>
             </div>
-          </div><!-- /immune-status col -->
 
-          <!-- Column 3: Other -->
-          <div class="col-4">
-            <p class="fw-semibold text-secondary small mb-1">Other</p>
+            <p class="fw-semibold text-secondary small mb-1 mt-2">Other</p>
             <div class="form-check">
               <input class="form-check-input contra" type="checkbox" id="c-flu-first-time" value="flu-first-time" />
               <label class="form-check-label small" for="c-flu-first-time">First-time influenza vaccination (patient &lt; 9 years)</label>
             </div>
-          </div><!-- /other col -->
+          </div><!-- /immune-status + other col -->
 
         </div><!-- /contra row -->
 
