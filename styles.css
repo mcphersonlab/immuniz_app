@@ -1,4 +1,4 @@
-/* Pediatric Immunization Scheduler – custom styles */
+/* Immunization Scheduler (All Ages) – custom styles */
 
 #app {
   max-width: 1800px;
@@ -24,7 +24,18 @@
   font-size: 1rem;
 }
 
-/* Tighten spacing on small screens */
+/* Sidebar panel styling */
+#patient-sidebar .card {
+  border-right: 2px solid #dee2e6;
+}
+
+@media (min-width: 768px) {
+  #patient-sidebar {
+    border-right: 1px solid #dee2e6;
+    padding-right: 1rem;
+  }
+}
+
 @media (max-width: 576px) {
   .card-body {
     padding: 0.75rem;
