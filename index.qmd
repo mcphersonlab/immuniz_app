@@ -37,7 +37,7 @@ format:
                   <option value="years">years</option>
                 </select>
               </div>
-              <div class="form-text">default: Months</div>
+              <div class="form-text">Default: Months</div>
             </div>
 
             <div class="col-md-6 d-flex align-items-end">
@@ -268,6 +268,7 @@ format:
                     <th>Vaccine</th>
                     <th>Indication</th>
                     <th>Notes</th>
+                    <th>Action</th>
                   </tr>
                 </thead>
                 <tbody id="risk-body"></tbody>
@@ -1085,14 +1086,23 @@ function renderResults(ageDays) {
   document.getElementById('age-banner').textContent =
     `Patient age: ${ageLabel(ageDays)}`;
 
-  // Separate received vaccines from recommended/catchup
+  // Separate received vaccines from recommended/catchup/risk-based
   const received = [];
+  const contraKeySet = new Set(contraItems.map(item => `${item.abbr}|||${item.series}`));
+
   const filteredRecommended = recommended.filter(row => {
-    if (receivedSet.has(`${row.abbr}|||${row.series}`)) { received.push(row); return false; }
+    const key = `${row.abbr}|||${row.series}`;
+    if (receivedSet.has(key) && !contraKeySet.has(key)) { received.push(row); return false; }
     return true;
   });
   const filteredCatchup = catchup.filter(row => {
-    if (receivedSet.has(`${row.abbr}|||${row.series}`)) { received.push(row); return false; }
+    const key = `${row.abbr}|||${row.series}`;
+    if (receivedSet.has(key) && !contraKeySet.has(key)) { received.push(row); return false; }
+    return true;
+  });
+  const filteredRiskBased = riskBased.filter(row => {
+    const key = `${row.abbr}|||${row.series}`;
+    if (receivedSet.has(key) && !contraKeySet.has(key)) { received.push(row); return false; }
     return true;
   });
 
@@ -1100,9 +1110,10 @@ function renderResults(ageDays) {
     const btn = document.createElement('button');
     btn.className = 'btn btn-sm btn-outline-secondary';
     btn.textContent = 'Mark as Received';
+    btn.setAttribute('aria-label', `Mark ${row.vaccine} ${row.series} as received`);
     btn.addEventListener('click', function () {
       receivedSet.add(`${row.abbr}|||${row.series}`);
-      renderResults(ageDays);
+      autoUpdate();
     });
     return btn;
   }
@@ -1111,9 +1122,10 @@ function renderResults(ageDays) {
     const btn = document.createElement('button');
     btn.className = 'btn btn-sm btn-outline-danger';
     btn.textContent = 'Undo';
+    btn.setAttribute('aria-label', `Undo: remove ${row.vaccine} ${row.series} from received`);
     btn.addEventListener('click', function () {
       receivedSet.delete(`${row.abbr}|||${row.series}`);
-      renderResults(ageDays);
+      autoUpdate();
     });
     return btn;
   }
@@ -1158,8 +1170,8 @@ function renderResults(ageDays) {
     });
   }
 
-  renderTable('risk-body', riskBased,
-    ['vaccine', 'series', 'indication'], 'no-risk');
+  renderTable('risk-body', filteredRiskBased,
+    ['vaccine', 'series', 'indication'], 'no-risk', makeMarkReceivedBtn);
 
   renderTable('received-body', received,
     ['vaccine', 'series', 'notes'], 'no-received', makeUnmarkReceivedBtn);
@@ -1212,10 +1224,16 @@ const debouncedAutoUpdateForAge = debounce(autoUpdate, 400);
 
 // ── Event Listeners ────────────────────────────────────────────────
 document.getElementById('dob').addEventListener('input', autoUpdate);
+document.getElementById('dob').addEventListener('change', autoUpdate);
 document.getElementById('age-value').addEventListener('input', debouncedAutoUpdateForAge);
 document.getElementById('age-unit').addEventListener('change', autoUpdate);
 document.querySelectorAll('.contra').forEach(cb => {
   cb.addEventListener('change', autoUpdate);
+});
+
+// Allow Enter key on age input to trigger update
+document.getElementById('age-value').addEventListener('keydown', function (e) {
+  if (e.key === 'Enter') autoUpdate();
 });
 
 document.getElementById('reset-btn').addEventListener('click', function () {
