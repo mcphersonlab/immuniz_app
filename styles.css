@@ -1,7 +1,7 @@
 /* Pediatric Immunization Scheduler – custom styles */
 
 #app {
-  max-width: 1400px;
+  max-width: 1800px;
   margin: 0 auto;
   padding: 1rem;
 }
@@ -28,5 +28,13 @@
 @media (max-width: 576px) {
   .card-body {
     padding: 0.75rem;
+  }
+}
+
+/* Limit sticky panel height on tall screens */
+@media (min-height: 600px) {
+  .position-sticky {
+    max-height: calc(100vh - 2rem);
+    overflow-y: auto;
   }
 }
