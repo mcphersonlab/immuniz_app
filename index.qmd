@@ -1225,6 +1225,7 @@ const debouncedAutoUpdateForAge = debounce(autoUpdate, 400);
 // ── Event Listeners ────────────────────────────────────────────────
 document.getElementById('dob').addEventListener('input', autoUpdate);
 document.getElementById('dob').addEventListener('change', autoUpdate);
+document.getElementById('dob').addEventListener('change', autoUpdate);
 document.getElementById('age-value').addEventListener('input', debouncedAutoUpdateForAge);
 document.getElementById('age-unit').addEventListener('change', autoUpdate);
 document.querySelectorAll('.contra').forEach(cb => {
