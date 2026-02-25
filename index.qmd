@@ -143,7 +143,7 @@ format:
           <div class="col-6">
             <div class="form-check">
               <input class="form-check-input contra" type="checkbox" id="c-asthma" value="asthma" />
-              <label class="form-check-label" for="c-asthma">Asthma (age &lt; 5 or on systemic steroids)</label>
+              <label class="form-check-label" for="c-asthma">Asthma or recurrent wheezing (especially &lt; 5 yrs, or on systemic steroids)</label>
             </div>
           </div>
 
@@ -169,6 +169,20 @@ format:
           </div>
 
         </div><!-- /immune-status row -->
+
+        <!-- Sub-section: Influenza-Specific Factors -->
+        <p class="fw-semibold text-secondary small mb-1 mt-2">Influenza-Specific Factors</p>
+        <div class="row g-2">
+
+          <div class="col-12">
+            <div class="form-check">
+              <input class="form-check-input contra" type="checkbox" id="c-flu-first-time" value="flu-first-time" />
+              <label class="form-check-label" for="c-flu-first-time">First-time influenza vaccination (child &lt; 9 years)</label>
+            </div>
+          </div>
+
+        </div><!-- /influenza-specific row -->
+
       </div><!-- /card-body -->
     </div><!-- /card -->
   </div><!-- /left col -->
@@ -731,7 +745,7 @@ const SCHEDULE = [
     maxAgeDays: toDays(18, 'years'),
     catchupMinDays: toDays(6, 'months'),
     catchupMaxDays: toDays(18, 'years'),
-    notes: "Two doses (4 weeks apart) in first season if < 9 years and not previously vaccinated. Severe egg allergy: use ccIIV4 or RIV4.",
+    notes: "Preferred when LAIV is contraindicated (egg allergy, asthma/recurrent wheezing, immunocompromised, first-time vaccination < 9 yrs). Two doses (4 weeks apart) in first season if < 9 years and not previously vaccinated. Severe egg allergy: use ccIIV4 or RIV4.",
     contraindications: ['prev-reaction'],
     precautions: ['allergy-egg'],
     liveVaccine: false,
@@ -740,13 +754,13 @@ const SCHEDULE = [
   {
     vaccine: "Influenza (Live Attenuated)",
     abbr: "LAIV4",
-    series: "Annual (alternative ≥ 2 yrs)",
+    series: "Annual (preferred ≥ 2 yrs when eligible)",
     minAgeDays: toDays(2, 'years'),
     maxAgeDays: toDays(18, 'years'),
     catchupMinDays: toDays(2, 'years'),
     catchupMaxDays: toDays(18, 'years'),
-    notes: "Preferred alternative in healthy non-pregnant children/adolescents ≥ 2 years. NOT for asthmatic or immunocompromised patients.",
-    contraindications: ['immunocompromised', 'hiv-low-cd4', 'asthma', 'pregnant', 'prev-reaction', 'allergy-egg'],
+    notes: "Preferred for healthy, non-pregnant children ≥ 2 years, or when patient strongly prefers intranasal route (needle avoidance). Avoid in: first-time vaccination (< 9 yrs), egg allergy, asthma or recurrent wheezing (especially < 5 yrs), and immunocompromising conditions.",
+    contraindications: ['immunocompromised', 'hiv-low-cd4', 'asthma', 'pregnant', 'prev-reaction', 'allergy-egg', 'flu-first-time'],
     precautions: [],
     liveVaccine: true,
     riskBased: false
@@ -966,12 +980,13 @@ const CONTRA_LABELS = {
   'encephalopathy':    'Post-DTaP encephalopathy',
   'intussusception':   'History of intussusception',
   'scid':              'SCID',
-  'asthma':            'Asthma / reactive airway disease',
+  'asthma':            'Asthma / recurrent wheezing',
   'prev-reaction':     'Severe reaction to prior dose',
   'hiv-low-cd4':       'HIV with severe immunosuppression',
   'complement-deficiency': 'Complement deficiency / eculizumab',
   'asplenia':          'Asplenia / functional asplenia',
-  'latex':             'Latex allergy'
+  'latex':             'Latex allergy',
+  'flu-first-time':    'First-time influenza vaccination (child < 9 years)'
 };
 
 // ── Core Logic ────────────────────────────────────────────────────
