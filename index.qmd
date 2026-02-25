@@ -1,6 +1,4 @@
 ---
-title: "Immunization Scheduler (All Ages)"
-subtitle: "AAP/ACIP Recommended Vaccine Schedule for Pediatric and Adult Patients"
 format:
   html:
     page-layout: full
@@ -34,11 +32,11 @@ format:
               <select id="age-unit" class="form-select">
                 <option value="days">days</option>
                 <option value="weeks">weeks</option>
-                <option value="months" selected>months</option>
-                <option value="years">years</option>
+                <option value="months">months</option>
+                <option value="years" selected>years</option>
               </select>
             </div>
-            <div class="form-text">Default: Months</div>
+            <div class="form-text">Default: Years</div>
           </div>
 
           <div class="col-12 d-flex align-items-end">
@@ -53,135 +51,88 @@ format:
         <hr class="my-3" />
         <h6 class="fw-semibold mb-2">&#9888;&#65039; Contraindication &amp; Precaution Screening</h6>
 
-        <!-- Sub-section: Allergies -->
-        <p class="fw-semibold text-secondary small mb-1 mt-2">Allergies</p>
-        <div class="row g-2 mb-2">
+        <div class="row g-2">
 
-          <div class="col-6">
+          <!-- Column 1: Allergies -->
+          <div class="col-4">
+            <p class="fw-semibold text-secondary small mb-1">Allergies</p>
             <div class="form-check">
               <input class="form-check-input contra" type="checkbox" id="c-allergy-egg" value="allergy-egg" />
-              <label class="form-check-label" for="c-allergy-egg">Egg (severe / anaphylaxis)</label>
+              <label class="form-check-label small" for="c-allergy-egg">Egg (severe / anaphylaxis)</label>
             </div>
-          </div>
-
-          <div class="col-6">
             <div class="form-check">
               <input class="form-check-input contra" type="checkbox" id="c-allergy-gelatin" value="allergy-gelatin" />
-              <label class="form-check-label" for="c-allergy-gelatin">Gelatin</label>
+              <label class="form-check-label small" for="c-allergy-gelatin">Gelatin</label>
             </div>
-          </div>
-
-          <div class="col-6">
             <div class="form-check">
               <input class="form-check-input contra" type="checkbox" id="c-allergy-neomycin" value="allergy-neomycin" />
-              <label class="form-check-label" for="c-allergy-neomycin">Neomycin</label>
+              <label class="form-check-label small" for="c-allergy-neomycin">Neomycin</label>
             </div>
-          </div>
-
-          <div class="col-6">
             <div class="form-check">
               <input class="form-check-input contra" type="checkbox" id="c-allergy-yeast" value="allergy-yeast" />
-              <label class="form-check-label" for="c-allergy-yeast">Yeast (Saccharomyces)</label>
+              <label class="form-check-label small" for="c-allergy-yeast">Yeast (Saccharomyces)</label>
             </div>
-          </div>
-
-          <div class="col-6">
             <div class="form-check">
               <input class="form-check-input contra" type="checkbox" id="c-prev-reaction" value="prev-reaction" />
-              <label class="form-check-label" for="c-prev-reaction">Severe reaction to prior dose</label>
+              <label class="form-check-label small" for="c-prev-reaction">Severe reaction to prior dose</label>
             </div>
-          </div>
-
-          <div class="col-6">
             <div class="form-check">
               <input class="form-check-input contra" type="checkbox" id="c-latex" value="latex" />
-              <label class="form-check-label" for="c-latex">Latex (vials with latex stoppers)</label>
+              <label class="form-check-label small" for="c-latex">Latex (vials with latex stoppers)</label>
             </div>
-          </div>
+          </div><!-- /allergies col -->
 
-        </div><!-- /allergies row -->
-
-        <!-- Sub-section: Immune Status -->
-        <p class="fw-semibold text-secondary small mb-1 mt-2">Immune Status</p>
-        <div class="row g-2">
-
-          <div class="col-6">
+          <!-- Column 2: Immune Status -->
+          <div class="col-4">
+            <p class="fw-semibold text-secondary small mb-1">Immune Status</p>
             <div class="form-check">
               <input class="form-check-input contra" type="checkbox" id="c-immunocompromised" value="immunocompromised" />
-              <label class="form-check-label" for="c-immunocompromised">Immunocompromised (HIV, chemo, steroids ≥ 2 wks, etc.)</label>
+              <label class="form-check-label small" for="c-immunocompromised">Immunocompromised (HIV, chemo, steroids ≥ 2 wks, etc.)</label>
             </div>
-          </div>
-
-          <div class="col-6">
             <div class="form-check">
               <input class="form-check-input contra" type="checkbox" id="c-pregnant" value="pregnant" />
-              <label class="form-check-label" for="c-pregnant">Pregnant</label>
+              <label class="form-check-label small" for="c-pregnant">Pregnant</label>
             </div>
-          </div>
-
-          <div class="col-6">
             <div class="form-check">
               <input class="form-check-input contra" type="checkbox" id="c-encephalopathy" value="encephalopathy" />
-              <label class="form-check-label" for="c-encephalopathy">Encephalopathy within 7 days of prior DTaP dose</label>
+              <label class="form-check-label small" for="c-encephalopathy">Encephalopathy within 7 days of prior DTaP dose</label>
             </div>
-          </div>
-
-          <div class="col-6">
             <div class="form-check">
               <input class="form-check-input contra" type="checkbox" id="c-intussusception" value="intussusception" />
-              <label class="form-check-label" for="c-intussusception">History of intussusception</label>
+              <label class="form-check-label small" for="c-intussusception">History of intussusception</label>
             </div>
-          </div>
-
-          <div class="col-6">
             <div class="form-check">
               <input class="form-check-input contra" type="checkbox" id="c-scid" value="scid" />
-              <label class="form-check-label" for="c-scid">SCID (Severe Combined Immunodeficiency)</label>
+              <label class="form-check-label small" for="c-scid">SCID (Severe Combined Immunodeficiency)</label>
             </div>
-          </div>
-
-          <div class="col-6">
             <div class="form-check">
               <input class="form-check-input contra" type="checkbox" id="c-asthma" value="asthma" />
-              <label class="form-check-label" for="c-asthma">Asthma or recurrent wheezing (especially &lt; 5 yrs, or on systemic steroids)</label>
+              <label class="form-check-label small" for="c-asthma">Asthma or recurrent wheezing (especially &lt; 5 yrs, or on systemic steroids)</label>
             </div>
-          </div>
-
-          <div class="col-6">
             <div class="form-check">
               <input class="form-check-input contra" type="checkbox" id="c-hiv-low-cd4" value="hiv-low-cd4" />
-              <label class="form-check-label" for="c-hiv-low-cd4">HIV with severe immunosuppression (low CD4)</label>
+              <label class="form-check-label small" for="c-hiv-low-cd4">HIV with severe immunosuppression (low CD4)</label>
             </div>
-          </div>
-
-          <div class="col-6">
             <div class="form-check">
               <input class="form-check-input contra" type="checkbox" id="c-complement-deficiency" value="complement-deficiency" />
-              <label class="form-check-label" for="c-complement-deficiency">Complement deficiency / eculizumab use</label>
+              <label class="form-check-label small" for="c-complement-deficiency">Complement deficiency / eculizumab use</label>
             </div>
-          </div>
-
-          <div class="col-6">
             <div class="form-check">
               <input class="form-check-input contra" type="checkbox" id="c-asplenia" value="asplenia" />
-              <label class="form-check-label" for="c-asplenia">Asplenia / functional asplenia (e.g., sickle cell)</label>
+              <label class="form-check-label small" for="c-asplenia">Asplenia / functional asplenia (e.g., sickle cell)</label>
             </div>
-          </div>
+          </div><!-- /immune-status col -->
 
-        </div><!-- /immune-status row -->
-
-        <!-- Sub-section: Influenza-Specific Factors -->
-        <p class="fw-semibold text-secondary small mb-1 mt-2">Influenza-Specific Factors</p>
-        <div class="row g-2">
-
-          <div class="col-12">
+          <!-- Column 3: Other -->
+          <div class="col-4">
+            <p class="fw-semibold text-secondary small mb-1">Other</p>
             <div class="form-check">
               <input class="form-check-input contra" type="checkbox" id="c-flu-first-time" value="flu-first-time" />
-              <label class="form-check-label" for="c-flu-first-time">First-time influenza vaccination (patient &lt; 9 years)</label>
+              <label class="form-check-label small" for="c-flu-first-time">First-time influenza vaccination (patient &lt; 9 years)</label>
             </div>
-          </div>
+          </div><!-- /other col -->
 
-        </div><!-- /influenza-specific row -->
+        </div><!-- /contra row -->
 
       </div><!-- /card-body -->
     </div><!-- /card -->
@@ -1215,6 +1166,13 @@ function computeSchedule(ageDays, contraKeys) {
     }
   }
 
+  // Influenza dedup: if LAIV4 is recommended (eligible and not contraindicated),
+  // suppress IIV4 from the recommended list so only one influenza vaccine is shown.
+  if (recommended.some(r => r.abbr === 'LAIV4')) {
+    const iivIdx = recommended.findIndex(r => r.abbr === 'IIV4');
+    if (iivIdx !== -1) recommended.splice(iivIdx, 1);
+  }
+
   return { recommended, catchup, contraItems, riskBased };
 }
 
@@ -1450,7 +1408,7 @@ document.getElementById('age-value').addEventListener('keydown', function (e) {
 document.getElementById('reset-btn').addEventListener('click', function () {
   document.getElementById('dob').value = '';
   document.getElementById('age-value').value = '';
-  document.getElementById('age-unit').value = 'months';
+  document.getElementById('age-unit').value = 'years';
   document.querySelectorAll('.contra').forEach(cb => { cb.checked = false; });
   receivedSet.clear();
   document.getElementById('results').classList.add('d-none');

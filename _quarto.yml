@@ -3,13 +3,10 @@ project:
   output-dir: _site
 
 website:
-  title: "Immunization Scheduler (All Ages)"
+  title: "Immuniz_App"
   description: "Interactive AAP/ACIP-recommended vaccine schedule for patients of all ages with contraindication checks"
   favicon: thinking.png
-  navbar:
-    left:
-      - href: index.qmd
-        text: Vaccine Scheduler
+  navbar: {}
   page-footer:
     center: |
       Based on the [AAP/ACIP recommended immunization schedule](https://www.cdc.gov/vaccines/schedules/).
