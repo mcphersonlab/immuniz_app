@@ -49,3 +49,19 @@
     overflow-y: auto;
   }
 }
+
+/* Restore Bootstrap flex grid inside the Patient Information card
+   (Quarto removes display:flex from .row globally) */
+#patient-sidebar .card-body .row {
+  display: flex;
+  flex-wrap: wrap;
+}
+#patient-sidebar .card-body .row > .col-6 {
+  flex: 0 0 50%;
+  max-width: 50%;
+  min-width: 0;
+}
+#patient-sidebar .card-body .row > .col-12 {
+  flex: 0 0 100%;
+  max-width: 100%;
+}
