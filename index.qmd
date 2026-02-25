@@ -1219,15 +1219,16 @@ function debounce(fn, delay) {
   };
 }
 
-// Debounced version of autoUpdate for age-value input
-const debouncedAutoUpdateForAge = debounce(autoUpdate, 400);
-
 // ── Event Listeners ────────────────────────────────────────────────
-document.getElementById('dob').addEventListener('input', autoUpdate);
-document.getElementById('dob').addEventListener('change', autoUpdate);
-document.getElementById('dob').addEventListener('change', autoUpdate);
-document.getElementById('age-value').addEventListener('input', debouncedAutoUpdateForAge);
-document.getElementById('age-unit').addEventListener('change', autoUpdate);
+function autoUpdateClearReceived() {
+  receivedSet.clear();
+  autoUpdate();
+}
+
+document.getElementById('dob').addEventListener('input', autoUpdateClearReceived);
+document.getElementById('dob').addEventListener('change', autoUpdateClearReceived);
+document.getElementById('age-value').addEventListener('input', debounce(autoUpdateClearReceived, 400));
+document.getElementById('age-unit').addEventListener('change', autoUpdateClearReceived);
 document.querySelectorAll('.contra').forEach(cb => {
   cb.addEventListener('change', autoUpdate);
 });
