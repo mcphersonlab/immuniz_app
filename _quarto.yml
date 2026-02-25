@@ -3,7 +3,7 @@ project:
   output-dir: _site
 
 website:
-  title: "Immuniz_App"
+  title: "Immune iZapp"
   description: "Interactive AAP/ACIP-recommended vaccine schedule for patients of all ages with contraindication checks"
   favicon: thinking.png
   navbar: {}
