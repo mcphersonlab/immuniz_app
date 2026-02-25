@@ -3,8 +3,8 @@ project:
   output-dir: _site
 
 website:
-  title: "Pediatric Immunization Scheduler"
-  description: "Interactive AAP-recommended vaccine schedule with contraindication checks"
+  title: "Immunization Scheduler (All Ages)"
+  description: "Interactive ACIP-recommended vaccine schedule for patients of all ages with contraindication checks"
   favicon: thinking.png
   navbar:
     left:
@@ -12,7 +12,7 @@ website:
         text: Vaccine Scheduler
   page-footer:
     center: |
-      Based on the [AAP/ACIP recommended immunization schedule](https://www.aap.org/en/patient-care/immunizations/immunization-schedule/).
+      Based on the [ACIP recommended immunization schedule](https://www.cdc.gov/vaccines/schedules/).
       For clinical decision support only — always verify with current guidelines.
 
 format:

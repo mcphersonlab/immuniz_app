@@ -1,6 +1,6 @@
 ---
-title: "Pediatric Immunization Scheduler"
-subtitle: "AAP/ACIP Recommended Vaccine Schedule with Contraindication Checks"
+title: "Immunization Scheduler (All Ages)"
+subtitle: "ACIP Recommended Vaccine Schedule for Pediatric and Adult Patients"
 format:
   html:
     page-layout: full
@@ -12,8 +12,8 @@ format:
 
   <div class="row g-4">
 
-  <!-- ── Left: Patient Input Panel ──────────────────────────────── -->
-  <div class="col-md-5 col-xl-4">
+  <!-- ── Left: Patient Input Panel (Sidebar) ───────────────────── -->
+  <div id="patient-sidebar" class="col-md-4 col-xl-3">
     <div class="card shadow-sm position-sticky" style="top:1rem;">
       <div class="card-header bg-primary text-white">
         <h5 class="mb-0">&#128100; Patient Information</h5>
@@ -177,7 +177,7 @@ format:
           <div class="col-12">
             <div class="form-check">
               <input class="form-check-input contra" type="checkbox" id="c-flu-first-time" value="flu-first-time" />
-              <label class="form-check-label" for="c-flu-first-time">First-time influenza vaccination (child &lt; 9 years)</label>
+              <label class="form-check-label" for="c-flu-first-time">First-time influenza vaccination (patient &lt; 9 years)</label>
             </div>
           </div>
 
@@ -187,8 +187,8 @@ format:
     </div><!-- /card -->
   </div><!-- /left col -->
 
-  <!-- ── Right: Vaccination Information ─────────────────────────── -->
-  <div class="col-md-7 col-xl-8">
+  <!-- ── Center: Vaccination Information ──────────────────────── -->
+  <div class="col-md-8 col-xl-9">
 
   <!-- ── Results ─────────────────────────────────────────────────── -->
   <div id="results" class="d-none">
@@ -338,8 +338,8 @@ format:
       <div class="col-12">
         <div class="alert alert-secondary small">
           <strong>&#9888; Disclaimer:</strong> This tool is intended as a clinical decision-support aid based on the
-          <a href="https://www.cdc.gov/vaccines/schedules/hcp/imz/child-adolescent.html" target="_blank">ACIP/AAP recommended immunization schedule</a>.
-          It does not replace clinical judgment or real-time CDC/AAP guidelines. Always verify doses already given,
+          <a href="https://www.cdc.gov/vaccines/schedules/" target="_blank">ACIP recommended immunization schedule for children, adolescents, and adults</a>.
+          It does not replace clinical judgment or real-time CDC/ACIP/AAP guidelines. Always verify doses already given,
           check current VIS sheets, and consult the most recent ACIP recommendations before administering vaccines.
         </div>
       </div>
@@ -355,7 +355,7 @@ format:
 
 <script>
 // ══════════════════════════════════════════════════════════════════
-//  AAP / ACIP Pediatric Immunization Scheduler
+//  ACIP Immunization Scheduler — Pediatrics & Adults
 //  Data current as of the 2024-25 ACIP recommended schedule.
 // ══════════════════════════════════════════════════════════════════
 
@@ -394,8 +394,8 @@ const SCHEDULE = [
     minAgeDays: 0,
     maxAgeDays: toDays(7, 'days'),
     catchupMinDays: 0,
-    catchupMaxDays: toDays(18, 'years'),
-    notes: "Administer within 24 h of birth; HepBsAg-positive mother → add HBIG within 12 h.",
+    catchupMaxDays: toDays(120, 'years'),
+    notes: "Administer within 24 h of birth; HepBsAg-positive mother → add HBIG within 12 h. All unvaccinated adults should complete a HepB series.",
     contraindications: ['allergy-yeast', 'prev-reaction'],
     precautions: [],
     liveVaccine: false,
@@ -408,7 +408,7 @@ const SCHEDULE = [
     minAgeDays: toDays(1, 'months'),
     maxAgeDays: toDays(2, 'months'),
     catchupMinDays: toDays(1, 'months'),
-    catchupMaxDays: toDays(18, 'years'),
+    catchupMaxDays: toDays(120, 'years'),
     notes: "At least 4 weeks after dose 1.",
     contraindications: ['allergy-yeast', 'prev-reaction'],
     precautions: [],
@@ -422,8 +422,8 @@ const SCHEDULE = [
     minAgeDays: toDays(6, 'months'),
     maxAgeDays: toDays(18, 'months'),
     catchupMinDays: toDays(6, 'months'),
-    catchupMaxDays: toDays(18, 'years'),
-    notes: "At least 16 weeks after dose 1 and at least 8 weeks after dose 2; no earlier than 6 months.",
+    catchupMaxDays: toDays(120, 'years'),
+    notes: "At least 16 weeks after dose 1 and at least 8 weeks after dose 2; no earlier than 6 months. Heplisav-B (HepB-CpG) is a 2-dose adult alternative (0, 1 month).",
     contraindications: ['allergy-yeast', 'prev-reaction'],
     precautions: [],
     liveVaccine: false,
@@ -554,8 +554,24 @@ const SCHEDULE = [
     minAgeDays: toDays(11, 'years'),
     maxAgeDays: toDays(12, 'years'),
     catchupMinDays: toDays(7, 'years'),
-    catchupMaxDays: toDays(18, 'years'),
-    notes: "Single booster dose; can be given regardless of interval since last Td-containing vaccine.",
+    catchupMaxDays: toDays(120, 'years'),
+    notes: "Single booster dose for adolescents and adults who have not received Tdap; can be given regardless of interval since last Td-containing vaccine. Recommended in each pregnancy (27–36 weeks). Substitute for one Td booster in adults on 10-year schedule.",
+    contraindications: ['prev-reaction', 'encephalopathy'],
+    precautions: [],
+    liveVaccine: false,
+    riskBased: false
+  },
+
+  // Td booster (adults)
+  {
+    vaccine: "Tetanus & Diphtheria",
+    abbr: "Td",
+    series: "Booster (every 10 years)",
+    minAgeDays: toDays(19, 'years'),
+    maxAgeDays: toDays(120, 'years'),
+    catchupMinDays: toDays(19, 'years'),
+    catchupMaxDays: toDays(120, 'years'),
+    notes: "Td booster every 10 years after the Tdap dose. Substitute one dose with Tdap if not yet received.",
     contraindications: ['prev-reaction', 'encephalopathy'],
     precautions: [],
     liveVaccine: false,
@@ -742,10 +758,10 @@ const SCHEDULE = [
     abbr: "IIV4",
     series: "Annual",
     minAgeDays: toDays(6, 'months'),
-    maxAgeDays: toDays(18, 'years'),
+    maxAgeDays: toDays(120, 'years'),
     catchupMinDays: toDays(6, 'months'),
-    catchupMaxDays: toDays(18, 'years'),
-    notes: "Preferred when LAIV is contraindicated (egg allergy, asthma/recurrent wheezing, immunocompromised, first-time vaccination < 9 yrs). Two doses (4 weeks apart) in first season if < 9 years and not previously vaccinated. Severe egg allergy: use ccIIV4 or RIV4.",
+    catchupMaxDays: toDays(120, 'years'),
+    notes: "Recommended annually for all persons ≥ 6 months. Preferred when LAIV is contraindicated. Two doses (4 weeks apart) in first season if < 9 years and not previously vaccinated. Severe egg allergy: use ccIIV4 or RIV4.",
     contraindications: ['prev-reaction'],
     precautions: ['allergy-egg'],
     liveVaccine: false,
@@ -756,10 +772,10 @@ const SCHEDULE = [
     abbr: "LAIV4",
     series: "Annual (alternative ≥ 2 yrs when eligible)",
     minAgeDays: toDays(2, 'years'),
-    maxAgeDays: toDays(18, 'years'),
+    maxAgeDays: toDays(49, 'years'),
     catchupMinDays: toDays(2, 'years'),
-    catchupMaxDays: toDays(18, 'years'),
-    notes: "Alternative (intranasal) option for healthy, non-pregnant children ≥ 2 years, or when patient strongly prefers intranasal route (needle avoidance). Avoid in: first-time vaccination (< 9 yrs), egg allergy, asthma or recurrent wheezing (especially < 5 yrs), and immunocompromising conditions.",
+    catchupMaxDays: toDays(49, 'years'),
+    notes: "Alternative (intranasal) option for healthy, non-pregnant persons 2–49 years who strongly prefer intranasal route. Avoid in: first-time vaccination (< 9 yrs), egg allergy, asthma or recurrent wheezing (especially < 5 yrs), and immunocompromising conditions.",
     contraindications: ['immunocompromised', 'hiv-low-cd4', 'asthma', 'pregnant', 'prev-reaction', 'allergy-egg', 'flu-first-time'],
     precautions: [],
     liveVaccine: true,
@@ -774,8 +790,8 @@ const SCHEDULE = [
     minAgeDays: toDays(12, 'months'),
     maxAgeDays: toDays(15, 'months'),
     catchupMinDays: toDays(12, 'months'),
-    catchupMaxDays: toDays(18, 'years'),
-    notes: "Do not give before 12 months (antibody interference). Two-dose series minimum interval 4 weeks.",
+    catchupMaxDays: toDays(120, 'years'),
+    notes: "Do not give before 12 months (antibody interference). Two-dose series minimum interval 4 weeks. Adults born in 1957 or later without evidence of immunity should receive ≥ 1 dose.",
     contraindications: ['immunocompromised', 'hiv-low-cd4', 'pregnant', 'allergy-neomycin', 'allergy-gelatin', 'prev-reaction'],
     precautions: [],
     liveVaccine: true,
@@ -788,8 +804,8 @@ const SCHEDULE = [
     minAgeDays: toDays(4, 'years'),
     maxAgeDays: toDays(6, 'years'),
     catchupMinDays: toDays(4, 'years'),
-    catchupMaxDays: toDays(18, 'years'),
-    notes: "Minimum interval 4 weeks after dose 1.",
+    catchupMaxDays: toDays(120, 'years'),
+    notes: "Minimum interval 4 weeks after dose 1. Adults needing a second dose (e.g., healthcare workers, international travelers): minimum interval 4 weeks.",
     contraindications: ['immunocompromised', 'hiv-low-cd4', 'pregnant', 'allergy-neomycin', 'allergy-gelatin', 'prev-reaction'],
     precautions: [],
     liveVaccine: true,
@@ -804,8 +820,8 @@ const SCHEDULE = [
     minAgeDays: toDays(12, 'months'),
     maxAgeDays: toDays(15, 'months'),
     catchupMinDays: toDays(12, 'months'),
-    catchupMaxDays: toDays(18, 'years'),
-    notes: "Contains gelatin and neomycin. Immunocompromised patients may receive VAR only with specialist guidance.",
+    catchupMaxDays: toDays(120, 'years'),
+    notes: "Contains gelatin and neomycin. Immunocompromised patients may receive VAR only with specialist guidance. All adults without evidence of immunity should receive 2 doses.",
     contraindications: ['immunocompromised', 'hiv-low-cd4', 'pregnant', 'allergy-neomycin', 'allergy-gelatin', 'prev-reaction'],
     precautions: [],
     liveVaccine: true,
@@ -818,8 +834,8 @@ const SCHEDULE = [
     minAgeDays: toDays(4, 'years'),
     maxAgeDays: toDays(6, 'years'),
     catchupMinDays: toDays(4, 'years'),
-    catchupMaxDays: toDays(18, 'years'),
-    notes: "Minimum interval 3 months after dose 1.",
+    catchupMaxDays: toDays(120, 'years'),
+    notes: "Minimum interval 3 months after dose 1 if < 13 years; minimum 4 weeks if ≥ 13 years.",
     contraindications: ['immunocompromised', 'hiv-low-cd4', 'pregnant', 'allergy-neomycin', 'allergy-gelatin', 'prev-reaction'],
     precautions: [],
     liveVaccine: true,
@@ -834,8 +850,8 @@ const SCHEDULE = [
     minAgeDays: toDays(12, 'months'),
     maxAgeDays: toDays(23, 'months'),
     catchupMinDays: toDays(12, 'months'),
-    catchupMaxDays: toDays(18, 'years'),
-    notes: "Minimum age 12 months. Two-dose series; second dose 6–18 months later.",
+    catchupMaxDays: toDays(120, 'years'),
+    notes: "Minimum age 12 months. Two-dose series; second dose 6–18 months later. All unvaccinated adults with risk factors (travel, liver disease, MSM, etc.) or who request vaccination.",
     contraindications: ['prev-reaction'],
     precautions: [],
     liveVaccine: false,
@@ -848,7 +864,7 @@ const SCHEDULE = [
     minAgeDays: toDays(18, 'months'),
     maxAgeDays: toDays(29, 'months'),
     catchupMinDays: toDays(18, 'months'),
-    catchupMaxDays: toDays(18, 'years'),
+    catchupMaxDays: toDays(120, 'years'),
     notes: "At least 6 months after dose 1.",
     contraindications: ['prev-reaction'],
     precautions: [],
@@ -864,8 +880,8 @@ const SCHEDULE = [
     minAgeDays: toDays(11, 'years'),
     maxAgeDays: toDays(12, 'years'),
     catchupMinDays: toDays(11, 'years'),
-    catchupMaxDays: toDays(18, 'years'),
-    notes: "Preferred age 11–12 years. Catch-up through 18 years if unvaccinated.",
+    catchupMaxDays: toDays(120, 'years'),
+    notes: "Preferred age 11–12 years. Catch-up through 18 years if unvaccinated. Adults with asplenia, complement deficiency, HIV, or travel to endemic areas require vaccination.",
     contraindications: ['prev-reaction'],
     precautions: [],
     liveVaccine: false,
@@ -878,8 +894,8 @@ const SCHEDULE = [
     minAgeDays: toDays(16, 'years'),
     maxAgeDays: toDays(18, 'years'),
     catchupMinDays: toDays(16, 'years'),
-    catchupMaxDays: toDays(18, 'years'),
-    notes: "Booster at 16 years; if first dose given ≥ 16 years, no booster needed.",
+    catchupMaxDays: toDays(120, 'years'),
+    notes: "Booster at 16 years; if first dose given ≥ 16 years, no booster needed unless ongoing risk.",
     contraindications: ['prev-reaction'],
     precautions: [],
     liveVaccine: false,
@@ -894,12 +910,27 @@ const SCHEDULE = [
     minAgeDays: toDays(11, 'years'),
     maxAgeDays: toDays(12, 'years'),
     catchupMinDays: toDays(9, 'years'),
-    catchupMaxDays: toDays(18, 'years'),
-    notes: "2-dose series if started before 15th birthday (doses 0 and 6–12 months). 3-dose series if started at ≥ 15 years or immunocompromised.",
+    catchupMaxDays: toDays(26, 'years'),
+    notes: "2-dose series if started before 15th birthday (doses 0 and 6–12 months). 3-dose series if started at ≥ 15 years or immunocompromised. Routine catch-up through age 26.",
     contraindications: ['prev-reaction', 'allergy-yeast'],
     precautions: ['pregnant'],
     liveVaccine: false,
     riskBased: false
+  },
+  {
+    vaccine: "Human Papillomavirus",
+    abbr: "HPV",
+    series: "Shared decision (27–45 years)",
+    minAgeDays: toDays(27, 'years'),
+    maxAgeDays: toDays(45, 'years'),
+    catchupMinDays: toDays(27, 'years'),
+    catchupMaxDays: toDays(45, 'years'),
+    notes: "Shared clinical decision-making for adults 27–45 years not adequately vaccinated. 3-dose series (0, 1–2, 6 months).",
+    contraindications: ['prev-reaction', 'allergy-yeast'],
+    precautions: ['pregnant'],
+    liveVaccine: false,
+    riskBased: true,
+    riskIndication: "Shared clinical decision for adults 27–45 yrs not previously vaccinated."
   },
 
   // COVID-19
@@ -908,10 +939,10 @@ const SCHEDULE = [
     abbr: "COVID-19",
     series: "Annual updated vaccine",
     minAgeDays: toDays(6, 'months'),
-    maxAgeDays: toDays(18, 'years'),
+    maxAgeDays: toDays(120, 'years'),
     catchupMinDays: toDays(6, 'months'),
-    catchupMaxDays: toDays(18, 'years'),
-    notes: "Current season's updated COVID-19 vaccine recommended annually. Follow most current ACIP guidance for product, dose count, and intervals.",
+    catchupMaxDays: toDays(120, 'years'),
+    notes: "Current season's updated COVID-19 vaccine recommended annually for all persons ≥ 6 months. Follow most current ACIP guidance for product, dose count, and intervals based on prior vaccination history and age.",
     contraindications: ['prev-reaction'],
     precautions: [],
     liveVaccine: false,
@@ -942,30 +973,137 @@ const SCHEDULE = [
     minAgeDays: toDays(16, 'years'),
     maxAgeDays: toDays(23, 'years'),
     catchupMinDays: toDays(10, 'years'),
-    catchupMaxDays: toDays(23, 'years'),
-    notes: "Shared clinical decision-making for healthy adolescents 16–23 years (preferred 16–18 years). Required for asplenia, complement deficiency, eculizumab, or outbreak setting.",
+    catchupMaxDays: toDays(120, 'years'),
+    notes: "Shared clinical decision-making for healthy adolescents 16–23 years (preferred 16–18 years). Required for asplenia, complement deficiency, eculizumab, or outbreak setting at any age.",
     contraindications: ['prev-reaction'],
     precautions: [],
     liveVaccine: false,
     riskBased: true,
-    riskIndication: "Shared clinical decision 16–23 yrs; required for asplenia / complement deficiency / eculizumab / outbreak."
+    riskIndication: "Shared clinical decision 16–23 yrs; required for asplenia / complement deficiency / eculizumab / outbreak (any age)."
   },
 
-  // PPSV23 — risk-based
+  // PPSV23 — risk-based (pediatric / adult high-risk)
   {
     vaccine: "Pneumococcal Polysaccharide",
     abbr: "PPSV23",
     series: "Risk-based",
     minAgeDays: toDays(2, 'years'),
-    maxAgeDays: toDays(18, 'years'),
+    maxAgeDays: toDays(64, 'years'),
     catchupMinDays: toDays(2, 'years'),
-    catchupMaxDays: toDays(18, 'years'),
-    notes: "For children 2–18 years with high-risk conditions (asplenia, sickle cell, immunocompromising conditions, cochlear implant, CSF leak). ≥ 8 weeks after last PCV dose.",
+    catchupMaxDays: toDays(64, 'years'),
+    notes: "For individuals 2–64 years with high-risk conditions (asplenia, sickle cell, immunocompromising conditions, cochlear implant, CSF leak, chronic illness). ≥ 8 weeks after last PCV dose.",
     contraindications: ['prev-reaction'],
     precautions: [],
     liveVaccine: false,
     riskBased: true,
-    riskIndication: "High-risk: asplenia, sickle cell, immunocompromising condition, cochlear implant, CSF leak."
+    riskIndication: "High-risk: asplenia, sickle cell, immunocompromising condition, cochlear implant, CSF leak, chronic illness."
+  },
+
+  // Adult Pneumococcal (PCV20 or PCV15+PPSV23)
+  {
+    vaccine: "Pneumococcal (Adult)",
+    abbr: "PCV20/PCV15",
+    series: "1-dose (age 65+)",
+    minAgeDays: toDays(65, 'years'),
+    maxAgeDays: toDays(120, 'years'),
+    catchupMinDays: toDays(65, 'years'),
+    catchupMaxDays: toDays(120, 'years'),
+    notes: "PCV20 × 1 dose (preferred) OR PCV15 × 1 dose followed by PPSV23 ≥ 1 year later for all adults ≥ 65 years not previously vaccinated with PCV20. If received PCV15 or PCV13 previously, give PPSV23 ≥ 1 year after PCV.",
+    contraindications: ['prev-reaction'],
+    precautions: [],
+    liveVaccine: false,
+    riskBased: false
+  },
+  {
+    vaccine: "Pneumococcal (Adult, high-risk)",
+    abbr: "PCV20/PCV15",
+    series: "1-dose (19–64 with risk factors)",
+    minAgeDays: toDays(19, 'years'),
+    maxAgeDays: toDays(64, 'years'),
+    catchupMinDays: toDays(19, 'years'),
+    catchupMaxDays: toDays(64, 'years'),
+    notes: "PCV20 × 1 dose (preferred) OR PCV15 + PPSV23 for adults 19–64 with chronic conditions (asplenia, immunocompromising, CSF leak, cochlear implant, sickle cell, chronic heart/lung/liver/kidney disease, diabetes, alcoholism, smoking).",
+    contraindications: ['prev-reaction'],
+    precautions: [],
+    liveVaccine: false,
+    riskBased: true,
+    riskIndication: "Adults 19–64 with asplenia, immunocompromising condition, CSF leak, cochlear implant, sickle cell, or chronic disease."
+  },
+
+  // Shingrix (RZV) — adults 50+
+  {
+    vaccine: "Recombinant Zoster (Shingrix)",
+    abbr: "RZV",
+    series: "Dose 1",
+    minAgeDays: toDays(50, 'years'),
+    maxAgeDays: toDays(120, 'years'),
+    catchupMinDays: toDays(50, 'years'),
+    catchupMaxDays: toDays(120, 'years'),
+    notes: "2-dose series (0 and 2–6 months apart) for all immunocompetent adults ≥ 50 years, regardless of prior zoster or Zostavax history. Also recommended for immunocompromised adults ≥ 19 years.",
+    contraindications: ['prev-reaction'],
+    precautions: [],
+    liveVaccine: false,
+    riskBased: false
+  },
+  {
+    vaccine: "Recombinant Zoster (Shingrix)",
+    abbr: "RZV",
+    series: "Dose 2",
+    minAgeDays: toDays(50, 'years'),
+    maxAgeDays: toDays(120, 'years'),
+    catchupMinDays: toDays(50, 'years'),
+    catchupMaxDays: toDays(120, 'years'),
+    notes: "2–6 months after dose 1. If dose 2 delayed, give as soon as possible without restarting series.",
+    contraindications: ['prev-reaction'],
+    precautions: [],
+    liveVaccine: false,
+    riskBased: false
+  },
+  {
+    vaccine: "Recombinant Zoster (Shingrix)",
+    abbr: "RZV",
+    series: "Immunocompromised adults (≥ 19 yrs)",
+    minAgeDays: toDays(19, 'years'),
+    maxAgeDays: toDays(49, 'years'),
+    catchupMinDays: toDays(19, 'years'),
+    catchupMaxDays: toDays(49, 'years'),
+    notes: "2-dose series for immunocompromised adults 19–49 years (e.g., on immunosuppressive therapy, hematopoietic stem cell transplant recipients). Series as for age ≥ 50.",
+    contraindications: ['prev-reaction'],
+    precautions: [],
+    liveVaccine: false,
+    riskBased: true,
+    riskIndication: "Immunocompromised adults 19–49 years (hematopoietic stem cell transplant, immunosuppressive therapy)."
+  },
+
+  // RSV vaccine for older adults
+  {
+    vaccine: "RSV Vaccine (Adult)",
+    abbr: "RSVpreF / mRESVIA",
+    series: "Shared decision (60–74 yrs)",
+    minAgeDays: toDays(60, 'years'),
+    maxAgeDays: toDays(74, 'years'),
+    catchupMinDays: toDays(60, 'years'),
+    catchupMaxDays: toDays(74, 'years'),
+    notes: "Shared clinical decision-making for adults 60–74 years (Abrysvo or mRESVIA, single dose). Recommended for all adults ≥ 75 years.",
+    contraindications: ['prev-reaction'],
+    precautions: [],
+    liveVaccine: false,
+    riskBased: true,
+    riskIndication: "Shared clinical decision for adults 60–74 years; routine for all adults ≥ 75 years."
+  },
+  {
+    vaccine: "RSV Vaccine (Adult)",
+    abbr: "RSVpreF / mRESVIA",
+    series: "Routine (≥ 75 yrs)",
+    minAgeDays: toDays(75, 'years'),
+    maxAgeDays: toDays(120, 'years'),
+    catchupMinDays: toDays(75, 'years'),
+    catchupMaxDays: toDays(120, 'years'),
+    notes: "Single dose recommended for all adults ≥ 75 years. Abrysvo or mRESVIA (not interchangeable). Only 1 lifetime dose currently indicated.",
+    contraindications: ['prev-reaction'],
+    precautions: [],
+    liveVaccine: false,
+    riskBased: false
   }
 ];
 
