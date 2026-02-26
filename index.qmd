@@ -127,6 +127,10 @@ format:
               <input class="form-check-input contra" type="checkbox" id="c-flu-first-time" value="flu-first-time" />
               <label class="form-check-label small" for="c-flu-first-time">First-time influenza vaccination (patient &lt; 9 years)</label>
             </div>
+            <div class="form-check">
+              <input class="form-check-input contra" type="checkbox" id="c-fear-of-needles" value="fear-of-needles" />
+              <label class="form-check-label small" for="c-fear-of-needles">Fear of needles (patient prefers intranasal route)</label>
+            </div>
           </div><!-- /immune-status + other col -->
 
         </div><!-- /contra row -->
@@ -709,7 +713,7 @@ const SCHEDULE = [
     maxAgeDays: toDays(120, 'years'),
     catchupMinDays: toDays(6, 'months'),
     catchupMaxDays: toDays(120, 'years'),
-    notes: "Recommended annually for all persons ≥ 6 months. Preferred when LAIV is contraindicated. Two doses (4 weeks apart) in first season if < 9 years and not previously vaccinated. Severe egg allergy: use ccIIV4 or RIV4.",
+    notes: "Recommended annually for all persons ≥ 6 months. Two doses (4 weeks apart) in first season if < 9 years and not previously vaccinated. Severe egg allergy: use ccIIV4 or RIV4.",
     contraindications: ['prev-reaction'],
     precautions: ['allergy-egg'],
     liveVaccine: false,
@@ -718,12 +722,12 @@ const SCHEDULE = [
   {
     vaccine: "Influenza (Live Attenuated)",
     abbr: "LAIV4",
-    series: "Annual (alternative ≥ 2 yrs when eligible)",
+    series: "Annual (alternative when IIV4 contraindicated or needle-averse)",
     minAgeDays: toDays(2, 'years'),
     maxAgeDays: toDays(49, 'years'),
     catchupMinDays: toDays(2, 'years'),
     catchupMaxDays: toDays(49, 'years'),
-    notes: "Alternative (intranasal) option for healthy, non-pregnant persons 2–49 years who strongly prefer intranasal route. Avoid in: first-time vaccination (< 9 yrs), egg allergy, asthma or recurrent wheezing (especially < 5 yrs), and immunocompromising conditions.",
+    notes: "Alternative (intranasal) option shown when IIV4 is contraindicated or patient has fear of needles. For healthy, non-pregnant persons 2–49 years. Avoid in: first-time vaccination (< 9 yrs), egg allergy, asthma or recurrent wheezing (especially < 5 yrs), and immunocompromising conditions.",
     contraindications: ['immunocompromised', 'hiv-low-cd4', 'asthma', 'pregnant', 'prev-reaction', 'allergy-egg', 'flu-first-time'],
     precautions: [],
     liveVaccine: true,
@@ -1072,7 +1076,8 @@ const CONTRA_LABELS = {
   'complement-deficiency': 'Complement deficiency / eculizumab',
   'asplenia':          'Asplenia / functional asplenia',
   'latex':             'Latex allergy',
-  'flu-first-time':    'First-time influenza vaccination (child < 9 years)'
+  'flu-first-time':    'First-time influenza vaccination (child < 9 years)',
+  'fear-of-needles':   'Patient preference for intranasal route'
 };
 
 // ── Core Logic ────────────────────────────────────────────────────
@@ -1163,11 +1168,20 @@ function computeSchedule(ageDays, contraKeys) {
     }
   }
 
-  // Influenza dedup: if LAIV4 is recommended (eligible and not contraindicated),
-  // suppress IIV4 from the recommended list so only one influenza vaccine is shown.
-  if (recommended.some(r => r.abbr === 'LAIV4')) {
-    const iivIdx = recommended.findIndex(r => r.abbr === 'IIV4');
-    if (iivIdx !== -1) recommended.splice(iivIdx, 1);
+  // Influenza dedup: show IIV4 by default; show LAIV4 only if IIV4 is
+  // contraindicated (absent from recommended) or patient has fear of needles.
+  const hasIIV4  = recommended.some(r => r.abbr === 'IIV4');
+  const hasLAIV4 = recommended.some(r => r.abbr === 'LAIV4');
+  if (hasIIV4 && hasLAIV4) {
+    if (contraSet.has('fear-of-needles')) {
+      // Patient prefers intranasal: suppress IIV4, show LAIV4
+      const iivIdx = recommended.findIndex(r => r.abbr === 'IIV4');
+      if (iivIdx !== -1) recommended.splice(iivIdx, 1);
+    } else {
+      // Default: suppress LAIV4, show IIV4
+      const laivIdx = recommended.findIndex(r => r.abbr === 'LAIV4');
+      if (laivIdx !== -1) recommended.splice(laivIdx, 1);
+    }
   }
 
   return { recommended, catchup, contraItems, riskBased };
